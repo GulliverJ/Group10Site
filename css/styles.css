@@ -1,0 +1,281 @@
+body {
+  position: relative;
+  background-color: #1b1b1b;
+}
+
+table {
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+hr {
+  border-color: #ddd;
+  border-width: 1px;
+}
+
+th {
+  background-color: #f5f5f5;
+  padding: 6px;
+  height: 32px;
+}
+
+tr {
+  background-color: #fff;
+  border-bottom-style: solid;
+  border-bottom-color: #f5f5f5;
+  border-bottom-width: 1px;
+}
+
+tr.head {
+  border: none;
+}
+
+td {
+  padding: 6px;
+}
+
+a {
+  color: #f60;
+}
+
+a:hover {
+  color: #ffaa88;
+  text-decoration: none;
+}
+
+.imgborder {
+  background-color: #fff;
+  padding: 16px;
+  padding-bottom: 0px;
+  border-radius: 6px;
+  font-style: italic;
+  border-color: #ddd;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.img-rounded {
+  margin-bottom: 16px;
+}
+
+.navbar {
+  border: none;
+  background-color: #fff;
+  margin: 0px;
+  width: 100%;
+  height: 72px;
+}
+
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1024px;
+  height: 100%;
+}
+
+.logo {
+  width: 330px;
+  float: left;
+  text-align: center;
+  color: #f60;
+  height:100%;
+  display:inline;
+}
+
+#topnav.nav {
+  float: right;
+  padding: none;
+  display:inline;
+  height: 100%;
+  list-style-type: none;
+}
+
+.nav-list {
+  display: inline-block;
+  color: #1b1b1b;
+  margin-right: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  height:72px;
+  text-align: center;
+  line-height: 72px;
+  text-decoration: none;
+}
+
+.nav-list:hover {
+  text-decoration: none;
+  color: #888;
+  border-bottom-color: #f60;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+}
+
+#sidebar {
+  width: inherit;
+}
+
+.affix-top .affix{
+  width: 228px;
+}
+
+@media (min-width: 979px) {
+  #sidebar.affix-top {
+    margin-top: 20px;
+    width:228px;
+  }
+  
+  #sidebar.affix {
+    position: fixed;
+    top:92px;
+    width: 228px;
+  }
+}
+
+#sidebar li.active {
+  background-color: #f5f5f5;
+  border: 1px #e7e7e7 solid;
+  border-top: none;
+}
+
+#sidebar li {
+  color: #1b1b1b;
+  background-color: #fff;
+  border: 1px #e7e7e7 solid;
+  border-top: none;
+  width: 100%;
+}
+
+#sidebar a {
+  color: #1b1b1b;
+  width: 100%;
+  
+}
+
+#sidebar a:hover {
+  background-color: #f60;
+  color: #fff;
+}
+
+
+.pageheader {
+  background-image: url(../img/dk_bg_pattern.png);
+  background-repeat: repeat;
+  background-color: #1b1b1b;
+  margin-top: 72px;
+  min-height: 256px;
+}
+
+p.pageblurb {
+  color: #ccc;
+  font-family: "HelveticaNeue", Helvetica, Arial, Sans-Serif;
+  font-size: 12pt;
+  font-weight: lighter;
+}
+
+.onpage {
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
+  color: #888;
+  border-bottom-color: #f60;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+}
+
+.meadow-image {
+  background-image: url(../img/summer_meadow2.jpg);
+  background-size: cover;
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+}
+
+.welcome {
+  color: #fff;
+  text-align: center;
+  min-height: 256px;
+  max-height: 750px;
+  height: calc(50vh - 72px);
+  border-bottom-color: #ddd;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  background: none;
+}
+
+.welcome-main {
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 300px;
+  max-width: 768px;
+}
+
+.blurb {
+  min-height: 50vh;
+}
+
+.content-body {
+  min-height:256px;
+  background-color: #f5f5f5;
+  border-top-color: #dedede;
+  border-top-style: solid;
+  border-top-width: 1px;
+  height: 100%;
+}
+
+.main-content {
+  background-color: #fff;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #eee;
+  border-width: 1px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -132px;
+  visibility: hidden;
+}
+
+.video {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  box-shadow: 0px 0px 12px #070707;
+
+}
+
+.sitemap {
+  padding-bottom: 20px;
+  border-top-color: #ddd;
+  border-top-style: solid;
+  border-top-width: 1px;
+  height:512px;
+  text-align: center;
+  background-color: #f60;
+  background-image: url(../img/.png);
+  background-repeat: repeat-x;
+  background-position: 0px 100%;
+}
+
+.footer {
+  height: 200px;
+  width: 100%;
+  color: #eee;
+  bottom: 0;
+  padding-right: 420px;
+  padding-top: 130px;
+  padding-bottom: 50px;
+  background-color: #1b1b1b;
+  background-image: url(../img/ucl_trans.png);
+  background-position: calc(100vw - 420px) 80px;
+  background-repeat: no-repeat;
+  border-bottom-width: 20px;
+  border-bottom-color: #fff;
+  border-bottom-style: solid;
+}
+
+h3.light {
+  color: #aaa;
+}

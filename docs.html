@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Group 10</title>
+    <!-- Bootstrap -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="icon" type="type/png" href="img/favicon_3.png"/>
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+
+    <!-- Top navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="wrapper">
+
+        <div class="logo">
+          <a href="index.html"><img src="img/title.png"></a>
+        </div>
+        <div class="nav" id="topnav">
+          <ul>
+            <li style="display: inline"><a href="show.html" class="nav-list">Showcase</a></li>
+            <li style="display: inline"><a href="" class="nav-list onpage">Collaborate</a></li>
+            <li style="display: inline"><a href="docs.html" class="nav-list">Documentation</a></li>
+            <li style="display: inline"><a href="dev.html" class="nav-list">Development</a></li>
+            <li style="display: inline"><a href="ref.html" class="nav-list">References</a></li>
+            <li style="display: inline"><a href="forum.html" class="nav-list">Forum</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark grey page header -->
+    <div class="pageheader">
+      <div class="container">
+        <div>
+          <h1 style="color: #f60">Documentation</h1>
+          <p class="pageblurb">Some appropriate graphics and text saying something to the effect of "Documentation and examples for use of both the system and the APIs"</p><br>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side nav -->
+          <div class="col-md-3 nopadding scrollspy" id="leftcol">
+            <div class="affix-top" id="sidebar" data-spy="affix">
+                <ul class="nav hidden-xs hidden-sm">
+                  <li style="background-color: #1b1b1b; padding-top: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; border: 1px #eee solid"><span style="padding: 16px; color: #fff">Navigation</span><p></li>
+                  <li><a href="#network">Building the Network</a></li>
+                  <li><a href="#webapi">Web API</a></li>
+                  <li><a href="#javaapi">Java API</a></li>
+                </ul>
+            </div>
+          </div>
+
+          <!-- MAIN CONTENT -->
+          <div class="col-md-9 nopadding main-content">
+
+            <!-- Sensors website -->
+            <h2>Building the Orange Sensors Network</h2>
+            <a class="anchor" id="network"></a>
+            <hr>
+            <ul>
+              <li>Short guide on website registration, how to add sensors, remove them etc.</li>
+              <li>Includes all details regarding how to configure hardware to work with the system</li>
+            </ul>
+
+            <!-- Node.js API -->
+            <h2>Orange Sensors Web API</h2>
+            <a class="anchor" id="webapi"></a>
+            <hr>
+            <ul>
+              <li>All documentation and guidelines for using the Node.js API</li>
+              <li>Along with examples, if possible</li>
+            </ul>
+
+            <!-- Java API -->
+            <h2>Orange Sensors Java API</h2>
+            <a class="anchor" id="javaapi"></a>
+            <hr>
+            <ul>
+              <li>All documentation and guidelines for using the Java API</li>
+              <li>Along with examples</li>
+            </ul>
+
+            <ul>
+              <li>eeee</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid footer">
+      <p style="float: right">This project is proudly presented in partnership with</p>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $('#sidebar').affix({
+      offset: {
+        top: $('#sidebar').offset().top - 92
+      }
+    });
+    </script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' type='text/javascript'></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug
+    <script src="./Starter Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script> -->
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Group 10</title>
+    <!-- Bootstrap -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="icon" type="type/png" href="img/favicon_3.png"/>
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+
+    <!-- Top navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="wrapper">
+
+        <div class="logo">
+          <a href="index.html"><img src="img/title.png"></a>
+        </div>
+        <div class="nav" id="topnav">
+          <ul>
+            <li style="display: inline"><a href="" class="nav-list onpage">Showcase</a></li>
+            <li style="display: inline"><a href="collab.html" class="nav-list">Collaborate</a></li>
+            <li style="display: inline"><a href="docs.html" class="nav-list">Documentation</a></li>
+            <li style="display: inline"><a href="dev.html" class="nav-list">Development</a></li>
+            <li style="display: inline"><a href="ref.html" class="nav-list">References</a></li>
+            <li style="display: inline"><a href="forum.html" class="nav-list">Forum</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark grey page header -->
+    <div class="pageheader">
+      <div class="container">
+        <div class="embed-responsive embed-responsive-16by9 video">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gvdf5n-zI14?rel=0&showinfo=0&controls=0" frameborder="0"></iframe>
+        </div>
+        <div>
+          <h1 style="color: #f60">Project Showcase</h1>
+          <p class="pageblurb">This page showcases the ins and outs of our design as a progression from requirements and specification to construction and testing.</p>
+          <p class="pageblurb">Take a look at our video as we demonstrate the full system in use, from building hardware to watching the results shown in real-time. The footage was filmed entirely using software already running <a href="http://victokoh.cs.ucl.ac.uk">here</a>. Feel free to sign up, download the sample sensor code, and experiment for yourself!</p><br>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side nav -->
+          <div class="col-md-3 nopadding scrollspy" id="leftcol">
+            <div class="affix-top" id="sidebar" data-spy="affix">
+                <ul class="nav hidden-xs hidden-sm">
+                  <li style="background-color: #1b1b1b; padding-top: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; border: 1px #eee solid"><span style="padding: 16px; color: #fff">Navigation</span><p></li>
+                  <li><a href="#req">Requirements</a></li>
+                  <li><a href="#spec">Specification and Design</a></li>
+                  <li><a href="#arch">Architectural Diagrams</a></li>
+                  <li><a href="#imp">Implementation and Achievements</a></li>
+                  <li><a href="#test">Testing and Evaluation</a></li>
+                </ul>
+            </div>
+          </div>
+
+          <!-- MAIN CONTENT -->
+          <div class="col-md-9 nopadding main-content">
+
+            <!-- Requirements -->
+            <h2>Requirements and Goals</h2>
+            <a class="anchor" id="req"></a>
+            <hr>
+            <h3>Here's a subsection header</h3>
+            <p>And a short sample of regular body text.</p>
+            <h4>And a sub-sub-section header</h4>
+            <ul class="bodylist">
+              <li>This is a list item</li>
+              <li>But wait- a second list item!</li>
+              <li>Third item</li>
+            </ul>
+            <pre>
+// Here's some ugly code (need to get a syntax highlighter at a later date)
+public static void main(String[] args)
+{
+  System.out.println("Hello World!");
+}
+            </pre>
+            <table>
+              <tr class="head">
+                <th style="width: 30%">I'm a header</th>
+                <th style="width: 70%">I'm a wider header</th>
+              </tr>
+              <tr>
+                <td>Wow, such row</td>
+                <td>Many subdivide</td>
+              </tr>
+              <tr>
+                <td>Very grid</td>
+                <td>wow</td>
+              </tr>
+            </table>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/cat.jpg">
+              <p>A photo of a cat named Claude. This is a far longer caption than necessary, but I'm writing it to test that the wrapping and actual pagagraph element of it is okay, because i just put hte line height up to 40 which should really mean the lines are super spaced out when really i just want a larger margin between the photo and the caption. This is a poor way of doing it.</p>
+            </div>
+
+            <!-- Sepcification and Design -->
+            <h2>Specification and Design</h2>
+            <a class="anchor" id="spec"></a>
+            <hr>
+
+            <!-- Architectural Diagrams -->
+            <h2>Architectural Diagrams</h2>
+            <a class="anchor" id="arch"></a>
+            <hr>
+
+            <!-- Implementation and Technical Achievements -->
+            <h2>Implementation and Technical Achievements</h2>
+            <a class="anchor" id="imp"></a>
+            <hr>
+
+            <!-- Testing and Evaluation -->
+            <h2>Testing and Evaluation</h2>
+            <a class="anchor" id="test"></a>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid footer">
+      <p style="float: right">This project is proudly presented in partnership with</p>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $('#sidebar').affix({
+      offset: {
+        top: $('#sidebar').offset().top - 92
+      }
+    });
+    </script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' type='text/javascript'></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug
+    <script src="./Starter Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script> -->
+</body></html>
