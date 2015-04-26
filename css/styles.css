@@ -62,7 +62,7 @@ th {
 tr {
   background-color: #fff;
   border-bottom-style: solid;
-  border-bottom-color: #f5f5f5;
+  border-bottom-color: #eee;
   border-bottom-width: 1px;
 }
 
@@ -83,6 +83,11 @@ a:hover {
   text-decoration: none;
 }
 
+h4 {
+  margin-top: 16px;
+  font-weight: bolder;
+}
+
 .imgborder {
   background-color: #fff;
   padding: 16px;
@@ -92,6 +97,8 @@ a:hover {
   border-color: #ddd;
   border-style: solid;
   border-width: 1px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .img-rounded {

@@ -128,14 +128,112 @@ public static void main(String[] args)
             <h2>Implementation</h2>
             <a class="anchor" id="imp"></a>
             <hr>
+
             <h3>Implementing the System</h3>
-            <p>The 'system' comprises everything to do with receiving and storing data from sensors on the network. Through the system, users can register sensors by giving information like their exact coordinates and what they measure. On a website end, they can manage their sensors and download the APIs. In the background, we have Java software running, listening to a specific port and waiting to receive packets. Each packet is validated, then inserted into the main readings database, ready to be access via one of our APIs.</p>
+            <p>The 'system' comprises everything to do with receiving and storing data from sensors on the network. Through the system, users can register sensors by giving information like their exact coordinates and what they measure. On a website end, they can manage their sensors and download the APIs. In the background, we have Java software running, listening to a specific port and waiting to receive packets. Each packet is validated, then inserted into the main readings database, ready to be accessed via one of our APIs.</p>
             <div class="imgborder">
               <img class="img-responsive img-rounded" src="img/system_overview.png">
               <p>An overview of the inner workings of the system.</p>
             </div>
+
             <h4>Data Storage</h4>
-            <p>Talk about the Users table and Readings table, why they're designed like that</p>
+            <p>As seen in the above overview, the system contains two distinct databases; an SQL databse containing sensitive data relating to the users, and a NoSQL database running on <a href="http://cassandra.apache.org/">Apache Cassandra</a> for storing all public sensor data. The tables and their basic relationships can be seen here, along with the access permissions according to the legend below.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/database_system_highlevel.png">
+              <p>An overview of the databases and tables used in the system backend.</p>
+            </div>
+            <p>Let's first have a look at the SQL database, designed for storing sensitive data about users, along with metadata about all sensors. We've chosen MySQL to implement this table, due to it being widely supported and documented, as well as convenient to use in conjunction with a web-based front-end. Its schema can be found <a href="#">here</a>.</p>
+
+            <p style="font-weight: bolder">Operators table</p>
+            <table>
+              <tr class="head">
+                <th style="width: 20%">Column Name</th>
+                <th style="width: 70%">Description</th>
+              </tr>
+              <tr>
+                <td>operator_id</td>
+                <td>An auto-incrementing integer acting as a unique ID for each user. Only the system will see this.</td>
+              </tr>
+              <tr>
+                <td>company</td>
+                <td>Essentially a username, though we recommend users to enter their company name as their username, and share a corporate account. No user will be able to see any other usernames on the system; these are private.</td>
+              </tr>
+              <tr>
+                <td>password</td>
+                <td>The user's password, to be encrptyed.</td>
+              </tr>
+              <tr>
+                <td>contact_name</td>
+                <td>The name that will be used in any correspondence with this user.</td>
+              </tr>
+              <tr>
+                <td>contact_address</td>
+                <td>The email address to which correspondence will be sent</td>
+              </tr>
+              <tr>
+                <td>joined</td>
+                <td>The date the user joined the system (auto-generated)</td>
+              </tr>
+            </table>
+
+            <p style="font-weight: bolder">Sensors table</p>
+            <table>
+              <tr class="head">
+                <th style="width: 20%">Column Name</th>
+                <th style="width: 70%">Description</th>
+              </tr>
+              <tr>
+                <td>global_id</td>
+                <td>The unique, system-wide integer ID for the sensor</td>
+              </tr>
+              <tr>
+                <td>operator_id</td>
+                <td>The ID of the operator who set this sensor up.</td>
+              </tr>
+              <tr>
+                <td>sensor_id</td>
+                <td>The ID of the sensor relative to the order of creation for this user - every user's first sensor will have a sensor_id of 1, for instance, but their global IDs are entirely unrelated. This is for the convenience of the users, allowing them to more coherently manage their sensors and initialise their data strings.</td>
+              </tr>
+              <tr>
+                <td>application</td>
+                <td>An optional label for the sensor. Users can query by this label to find their data more quickly.</td>
+              </tr>
+              <tr>
+                <td>measures</td>
+                <td>The physical property that the sensor measures, for instance Distance or Temperature</td>
+              </tr>
+              <tr>
+                <td>unit</td>
+                <td>The standard unit that this sensor's readings are sent in</td>
+              </tr>
+              <tr>
+                <td>lat</td>
+                <td>The sensor's latitude, as a 6-decimal-point float</td>
+              </tr>
+              <tr>
+                <td>lng</td>
+                <td>The sensor's longitude, as a 6-decimal-point float</td>
+              </tr>
+            </table>
+
+            <p style="font-weight: bolder">Identifiers table</p>
+            <table>
+              <tr class="head">
+                <th style="width: 20%">Column Name</th>
+                <th style="width: 70%">Description</th>
+              </tr>
+              <tr>
+                <td>operator_id</td>
+                <td>The operator ID of a user. This is a foreign key referencing the Operators table.</td>
+              </tr>
+              <tr>
+                <td>identifier</td>
+                <td>A unique, 8-character, randomly generated alpha-numerical identifier, for e.g. a4bsc9swm. This is generated in PHP at time of user registration, and is used for anonymous identification of incoming data. Users must prepend their sensor's data string with this identifier, where the system software (see a later section) will check it to ensure it matches for a valid user, and from this find its global_id.</td>
+              </tr>
+            </table>
+            <p>Again, the schema for this database can be downloaded <a href="#">here</a>.</p>
+            <p>The Cassandra database we've used has a slightly more complex structure, owing to its NoSQL concepts. Cassandra is well-documented, in terms of its data model and installation, so we won't labour the basics here. In fact, Cassandra was chosen partly due to its relatively wide level of documentation, along with its support for additional software like Hadoop and Druid, to be used for later analytics. Cassandra also provides flexible scalability, greatly simplifying the process of server expansion by automated data sharing across server nodes.</p>
+            <p>Here's a closer look at the columnfamily designs, and an explanation of each field.
             <h4>Server Software</h4>
             <p>UML diagrams and details of the server software</p>
             <h4>The Front-end</h4>
