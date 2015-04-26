@@ -58,7 +58,8 @@
                   <li><a href="#req">Requirements</a></li>
                   <li><a href="#spec">Specification and Design</a></li>
                   <li><a href="#arch">Architectural Diagrams</a></li>
-                  <li><a href="#imp">Implementation and Achievements</a></li>
+                  <li><a href="#imp">Implementation</a></li>
+                  <li><a href="#ach">Technical Achievements</a></li>
                   <li><a href="#test">Testing and Evaluation</a></li>
                 </ul>
             </div>
@@ -123,9 +124,28 @@ public static void main(String[] args)
               <li>Diagrams of the sensor hardware we used, with a link to the guide (in docs.html) possibly</li>
             </ul>
 
-            <!-- Implementation and Technical Achievements -->
-            <h2>Implementation and Technical Achievements</h2>
+            <!-- Implementation -->
+            <h2>Implementation</h2>
             <a class="anchor" id="imp"></a>
+            <hr>
+            <h3>Implementing the System</h3>
+            <p>The 'system' comprises everything to do with receiving and storing data from sensors on the network. Through the system, users can register sensors by giving information like their exact coordinates and what they measure. On a website end, they can manage their sensors and download the APIs. In the background, we have Java software running, listening to a specific port and waiting to receive packets. Each packet is validated, then inserted into the main readings database, ready to be access via one of our APIs.</p>
+            <h4>Data Storage</h4>
+            <p>Talk about the Users table and Readings table, why they're designed like that</p>
+            <h4>Server Software</h4>
+            <p>UML diagrams and details of the server software</p>
+            <h4>The Front-end</h4>
+            <p>Details of how the front end has been built using PHP</p>
+            <h4>The Java API</h4>
+            <p>How I went about designing and building the Java API</p>
+            <h4>RESTful API</h4>
+            <p>Victoria ought to do this really</p>
+            <h3>Implementing Hardware</h3>
+            <p>Whilst specific pieces of sensor hardware are certainly likely to be different - by reading different types of data and being designed to be used in different ways - there are some key elements to our system design that must be obeyed in order to work with the system. We developed sensor hardware as parking bay monitors, to be used in conjunction with our <a href="demo.html">Smart-Parking application</a>, and have detailed the important design aspects here. Anyone wishing to build hardware to use with this system must follow the same basic principles in order to ensure compatability.</p>
+
+            <!-- Technical Achievements -->
+            <h2>Technical Achievements</h2>
+            <a class="anchor" id="ach"></a>
             <hr>
             <ul>
               <li>Hardware: 
