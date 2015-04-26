@@ -130,6 +130,10 @@ public static void main(String[] args)
             <hr>
             <h3>Implementing the System</h3>
             <p>The 'system' comprises everything to do with receiving and storing data from sensors on the network. Through the system, users can register sensors by giving information like their exact coordinates and what they measure. On a website end, they can manage their sensors and download the APIs. In the background, we have Java software running, listening to a specific port and waiting to receive packets. Each packet is validated, then inserted into the main readings database, ready to be access via one of our APIs.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/system_overview.png">
+              <p>An overview of the inner workings of the system.</p>
+            </div>
             <h4>Data Storage</h4>
             <p>Talk about the Users table and Readings table, why they're designed like that</p>
             <h4>Server Software</h4>
