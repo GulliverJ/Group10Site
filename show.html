@@ -110,10 +110,21 @@ public static void main(String[] args)
             <h2>Specification and Design</h2>
             <a class="anchor" id="spec"></a>
             <hr>
+            <h3>Functional Specification</h3>
             <ul>
-              <li>The high-level design of the system (basic illustrations of how it works)</li>
-              <li>Functional requirements/specification points extracted from the core requirements given above</li>
+              <li>These will be a list of requirements that we ourselves have defined as "our scope"</li>
+              <li>E.g. a section in the specification for the System website: "Users should be able to indicate sensor position on an interactive Google map"</li>
             </ul>
+            
+            <div class="subsection-divide"></div>
+            <h3>High-level System Design</h3>
+            <ul>
+              <li>Talking at high-level about how we've designed the system, and whether or not it has the potential to satisfy requirements/why it has the potential to satisfy the requirements</li>
+            </ul>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/overview.png">
+              <p>A high-level overview of the system design as a whole.</p>
+            </div>
 
             <!-- Implementation -->
             <h2>Implementation</h2>
@@ -291,7 +302,7 @@ public static void main(String[] args)
             <h4>Server Software</h4>
             <p>The software has a few things it needs to take care of. Specifically:</p>
             <ul class="bodylist">
-              <li>Listening to a UDP port for packet receipt</li>
+              <li>Listening to a UDP port for Datagram packet receipt</li>
               <li>Processing the packets to ensure they contain valid data</li>
               <li>Checking how to organise the data and inserting it correctly</li>
             </ul>
@@ -436,7 +447,7 @@ public static void main(String[] args)
             <h2>Testing</h2>
             <a class="anchor" id="test"></a>
             <hr>
-            <h4 style="font-weight: lighter">Testing is a hugely important factor in any piece of software. In our case, ensuring optimum efficiency along with secure, reliable code execution is critical; though our proof-of-concept may be small-scale, the design is intended to work at a scale with potentially millions of sensors.</h4>
+            <h4 style="font-weight: lighter">Testing is a hugely important factor in any piece of software. In our case, ensuring optimum efficiency along with secure, reliable code execution is critical; though our proof-of-concept may be small-scale, the design is intended to work at a scale comprising potentially millions of sensors.</h4>
             <div class="subsection-divide"></div>
             <h3>Software Testing</h3>
             <h4>Visual Testing</h4>
@@ -447,26 +458,45 @@ public static void main(String[] args)
             </div>
             <div class="subsection-divide"></div>
             <h4>Load-testing the server</h4>
+            <p>Our server is to be designed to hold up to high levels of traffic, given that it's the backbone of a network potentially comprising hundreds of thousands of sensors. As such, it's important to test the structure we have in place in order to assess how any issues can be rectified in future versions. We've chosen to load-test our server by sending 1000 packets of data simultaneously, from 10 threads running concurrently. Each thread will be updating a single sensor, and will loop 100 times whilst sending an incremented reading with each iteration. In an ideal case, we should be able to see in the data_archive table readings showing 1 - 100 for each tested sensor, with the overall count in the data_archive table for those sensors being 1000, indicating a 100% receipt rate.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/loadtest_code.png">
+              <p>Our load-testing program creates 10 of these threads, each of which sends 100 distinct readings to the database.</p>
+            </div>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/loadtest_1.png">
+              <p>Three tests were performed each with three repeats - sending 1000 readings with no delay, over the course of a second, and over the course of 10 seconds.</p>
+            </div>
+            <p>The results were in line with our expectations; UDP as a protocol is by its very nature prone to packet loss. We can see, however, that we have a drop rate of less than 5% when receiving at a rate of 1000 updates per second (86 million per day) - which, one could argue, is within a reasonable tolerance. That said, for data where the update is critical, even a drop rate of 1% could be severely problematic.</p>
+            <p>As a consequence of load testing, we have come to the conclusion that support for TCP connections is a must for future versions of the system. UDP is likely to be perfectly practical for regularly updating sensors - e.g. a temperature sensor which updates every 30 seconds or so - because in these situations, losing 5% of packets isn't likely to negatively affect results. Conversely, if a sensor calculates its updates more intelligently (for instance, a parking monitor sending an update only when it's sure it notices a vehicle), delivery of that packet is critical to operation.</p>
+            <p>Finally, it's worth noting that the system has been designed with large packets in mind - that is, sending a single data packet containing multiple readings. If users were to have their data sent more economically (for example, ten readings per packet) the maximum data transfer would increase by a factor of the average reading per packet (in this example, x10).</p>
             <div class="subsection-divide"></div>
             <h4>JUnit testing</h4>
-            <p>Methods in Java software are very easily tested through JUnit, and we made sure to perform multiple JUnit operations as insurance of reliability. The Java API, example, has a high priority for being bug-free, as it is intended to be distributed publicly for developers. Bugs in our singular system program can be fairly easily tackled without a problem, but to issue updates to a library used in potentially tens of thousands of applications is a far more damaging process.</p>
+            <p>Methods in Java software are very easily tested through JUnit, and we made sure to perform multiple JUnit operations as insurance of reliability. The Java API, example, has a high priority for being bug-free, as it is intended to be distributed publicly for developers. Bugs in our singular system program can be fairly easily tackled without a problem, but to issue updates to a library used in potentially tens of thousands of externally developed applications is a far more damaging process.</p>
             <p>In order to formally test the Java API, the majority of methods were planned ahead. These were the methods whose inclusion was compulsory - for example, retrieving sensors by application label - getIDsWhere(String col, String value) - and then retrieving their readings - getLastReading(int id). JUnit tests were then written in advance using a set of mock readings created in the system database, which included 6 sensors each with 5 readings in the archive. This can be seen below.
             <div class="imgborder">
               <img class="img-responsive img-rounded" src="img/testset.png">
               <p>The mock entries into the database tables, created for the purposes of extensive API testing. The full details can be found <a href="res/testset_details.txt">here</a>.</p>
             </div>
-            <p>With these in place, the JUnit tests could be written. Here are four such tests, with the set up and tear down:</p>
+            <p>With these in place, the JUnit tests could be written. Below are four such tests, with the set up and tear down methods included. Compare these with the expected values as seen in the test set, above.</p>
             <div class="imgborder">
               <img class="img-responsive img-rounded" src="img/junit-methods.png">
-              <p>The console output of both the system software (receiving packets) and sensor simulator software (10 threads each sending packets every ~10 minutes).</p>
+              <p>A sample of a few test methods written for testing the Java API.</p>
             </div>
+            <p>28 tests in total were run on the Java API, and they highlighted a number of important issues. These included:</p>
+            <ul>
+              <li>ID lists returned from a query to the Cassandra database were unsorted due to the structure of CQL; this meant that the index of a given reading in the resulting list could not be guaranteed to match the ID at the same index in the IDs list. This was rectified by implementing Java's Arrays.sort method.</li>
+              <li>Attempting to filter via timestamp took time to achieve reliably and successfully, and required further work on the API in order to allow full compatability with Java Date objects.</li>
+            </ul>
 
-            <!--  > int list returned unordered list due to timestamp ordering in CQL; fixed
-  > Issue with parsing dates resolved
-  > Issue with parsing dates in a query; requset long instead -->
+            <p>Once each test and accompanying API method had been written, it took only 3 runs before tests were successful.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/javaapi_success.png">
+              <p>The successful run of the test methods.</p>
+            </div>
+            <div class="subsection-divide"></div>
             <h4>Long-term testing through our use-case</h4>
-
-
+            <p>As a way to demonstrate our Smart Parking application in action, we produced sensor simulator code to simulate the types of input a parking bay monitor might receive. Over a normal distribution of mean 10 minutes, and a standard deviation of 2 minutes, 10 separate threads would change state and send a reading alternating between above and below 40cm. This therefore averaged one insert a minute, and the software was left running for around 8 days before it was first interrupted for important updates. During this time, visual inspection revealed 100% packet transfer, with no exceptions being thrown at any point.</p>
             <div class="subsection-divide"></div>
 
             <h3>Hardware Testing</h3>
@@ -476,6 +506,10 @@ public static void main(String[] args)
             <a class="anchor" id="eval"></a>
             <hr>
             <h3>Successes</h3>
+            <h4 style="font-weight: lighter">Throughout this project, we've overcome many challenges and provided a working, feasible proof of concept design for our clients. Performing a requirements review highlights how we have been able to target the specific issues identified in the brief.</h4>
+            <div class="subsection-divide"></div>
+            <h4>A Plug and Play Architecture</h4>
+            <p>We've achieved this through the culmination of multiple design features. To begin, AHHHHH</p>
 
             <div class="subsection-divide"></div>
 
