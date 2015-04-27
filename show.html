@@ -57,10 +57,10 @@
                   <li style="background-color: #1b1b1b; padding-top: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; border: 1px #eee solid"><span style="padding: 16px; color: #fff">Navigation</span><p></li>
                   <li><a href="#req">Requirements</a></li>
                   <li><a href="#spec">Specification and Design</a></li>
-                  <li><a href="#arch">Architectural Diagrams</a></li>
                   <li><a href="#imp">Implementation</a></li>
                   <li><a href="#ach">Technical Achievements</a></li>
-                  <li><a href="#test">Testing and Evaluation</a></li>
+                  <li><a href="#test">Testing</a></li>
+                  <li><a href="#eval">Evaluation</a></li>
                 </ul>
             </div>
           </div>
@@ -69,7 +69,7 @@
           <div class="col-md-9 nopadding main-content">
 
             <!-- Requirements -->
-            <h2>Requirements and Goals</h2>
+            <h2 style="margin-top: 12px">Requirements and Goals</h2>
             <a class="anchor" id="req"></a>
             <hr>
             <h3>Here's a subsection header</h3>
@@ -115,15 +115,6 @@ public static void main(String[] args)
               <li>Functional requirements/specification points extracted from the core requirements given above</li>
             </ul>
 
-            <!-- Architectural Diagrams -->
-            <h2>Architectural Diagrams</h2>
-            <a class="anchor" id="arch"></a>
-            <hr>
-            <ul>
-              <li>More detailed illustrations of the system components, with labels and diagrams as necessary</li>
-              <li>Diagrams of the sensor hardware we used, with a link to the guide (in docs.html) possibly</li>
-            </ul>
-
             <!-- Implementation -->
             <h2>Implementation</h2>
             <a class="anchor" id="imp"></a>
@@ -136,15 +127,23 @@ public static void main(String[] args)
               <p>An overview of the inner workings of the system.</p>
             </div>
 
+            <p>The source code for the system is, of course, included in our <a href="https://github.com/GulliverJ/comp2014">GitHub repository</a>, under the folder 'orange-sensors-system'.</p>
+
+            <div class="subsection-divide"></div>
+
             <h4>Data Storage</h4>
             <p>As seen in the above overview, the system contains two distinct databases; an SQL databse containing sensitive data relating to the users, and a NoSQL database running on <a href="http://cassandra.apache.org/">Apache Cassandra</a> for storing all public sensor data. The tables and their basic relationships can be seen here, along with the access permissions according to the legend below.</p>
             <div class="imgborder">
               <img class="img-responsive img-rounded" src="img/database_system_highlevel.png">
               <p>An overview of the databases and tables used in the system backend.</p>
             </div>
-            <p>Let's first have a look at the SQL database, designed for storing sensitive data about users, along with metadata about all sensors. We've chosen MySQL to implement this table, due to it being widely supported and documented, as well as convenient to use in conjunction with a web-based front-end. Its schema can be found <a href="#">here</a>.</p>
+            <p>Let's first have a look at the SQL database, designed for storing sensitive data about users, along with metadata about all sensors. We've chosen MySQL to implement this table, due to it being widely supported and documented, as well as convenient to use in conjunction with a web-based front-end. Its schema can be found <a href="res/orangesystem.sql">here</a>.</p>
 
             <p style="font-weight: bolder">Operators table</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/system_table_operators.png">
+              <p>The column description for the operators table.</p>
+            </div>
             <table>
               <tr class="head">
                 <th style="width: 20%">Column Name</th>
@@ -177,6 +176,10 @@ public static void main(String[] args)
             </table>
 
             <p style="font-weight: bolder">Sensors table</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/system_table_sensors.png">
+              <p>The column description for the operators table.</p>
+            </div>
             <table>
               <tr class="head">
                 <th style="width: 20%">Column Name</th>
@@ -217,6 +220,10 @@ public static void main(String[] args)
             </table>
 
             <p style="font-weight: bolder">Identifiers table</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/system_table_identifiers.png">
+              <p>The column description for the operators table.</p>
+            </div>
             <table>
               <tr class="head">
                 <th style="width: 20%">Column Name</th>
@@ -231,50 +238,249 @@ public static void main(String[] args)
                 <td>A unique, 8-character, randomly generated alpha-numerical identifier, for e.g. a4bsc9swm. This is generated in PHP at time of user registration, and is used for anonymous identification of incoming data. Users must prepend their sensor's data string with this identifier, where the system software (see a later section) will check it to ensure it matches for a valid user, and from this find its global_id.</td>
               </tr>
             </table>
-            <p>Again, the schema for this database can be downloaded <a href="#">here</a>.</p>
+            <p>Again, the schema for this database can be downloaded <a href="res/orangesystem.sql">here</a>.</p>
             <p>The Cassandra database we've used has a slightly more complex structure, owing to its NoSQL concepts. Cassandra is well-documented, in terms of its data model and installation, so we won't labour the basics here. In fact, Cassandra was chosen partly due to its relatively wide level of documentation, along with its support for additional software like Hadoop and Druid, to be used for later analytics. Cassandra also provides flexible scalability, greatly simplifying the process of server expansion by automated data sharing across server nodes.</p>
-            <p>Here's a closer look at the columnfamily designs, and an explanation of each field.
+            <p>Here's a closer look at the columnfamily designs. Note that the sensor_details columnfamily shares many columns with te Sensors table in the SQL database - for this reason, shared columns will be omitted.</p>
+
+            <p style="font-weight: bolder">Sensor_details table</p>
+            <table>
+              <tr class="head">
+                <th style="width: 20%">Column Name</th>
+                <th style="width: 70%">Description</th>
+              </tr>
+              <tr>
+                <td>first_added</td>
+                <td>The date and time that the sensor was first initialised.</td>
+              </tr>
+              <tr>
+                <td>reading</td>
+                <td>The most recently received reading for this sensor, as a float value. Initialised null.</td>
+              </tr>
+              <tr>
+                <td>timestamp</td>
+                <td>The timestamp for the most recently received reading.</td>
+              </tr>
+            </table>
+
+            <p style="font-weight: bolder">Data_archive table</p>
+            <table>
+              <tr class="head">
+                <th style="width: 20%">Column Name</th>
+                <th style="width: 70%">Description</th>
+              </tr>
+              <tr>
+                <td>global_id</td>
+                <td>The sensor's global_id acts as a partition key in the data archive.</td>
+              </tr>
+              <tr>
+                <td>timestamp</td>
+                <td>Each reading is stored with its timestamp (the time it was received) as a cluster key. This allows users to later query the archive by giving it a specific time range, for example retrieving distinct 24 hour periods and analysing them as blocks.</td>
+              </tr>
+              <tr>
+                <td>reading</td>
+                <td>The reading from this sensor that was received at the specified timestamp, stored as a float.</td>
+              </tr>
+            </table>
+
+            <p>The schema for this database can be found <a href="#">here</a> and the columnfamily descriptions can be seen <a href="#">here</a>.</p>
+
+            <p>With these databases implemented, we can now develop the server-side software which handles data input.</p>
+
+            <div class="subsection-divide"></div>
+
             <h4>Server Software</h4>
-            <p>UML diagrams and details of the server software</p>
+            <p>The software has a few things it needs to take care of. Specifically:</p>
+            <ul class="bodylist">
+              <li>Listening to a UDP port for packet receipt</li>
+              <li>Processing the packets to ensure they contain valid data</li>
+              <li>Checking how to organise the data and inserting it correctly</li>
+            </ul>
+            <p>We've written the server-side software in Java, in order to make use of its concurrency support and access to connectivity libraries for easy networking. In our software we've implemented a dedicated thread to handle each one of the three points given above; a single <span style="font-weight: bolder">Listener thread</span> will wait for input, and store the packets in a DataManager object, using concurrency implementations to ensure a safe transfer of data. Once there is data held within the manager, a <span style="font-weight: bolder">Handler thread</span> will be notified, and will take from the list using a first-in, first-out approach. The Handler thread takes care of checking the identifier sent at the beginning of the string against the Users database, to ensure it matches a valid user. If a user exists for the given identifier, an <span style="font-weight: bolder">Input thread</span> will be created to insert the readings contained within that packet. This involves first using the identifier to look up the global sensor ID for each reading. The 'sensor_details' table will then be updated with the latest reading, and the 'data_archive' table will receive a new row for the data.</p>
+            <p>Here's a more descriptive sequence diagram of the software approach.</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/cat.jpg">
+              <p>A sequence diagram for the system software, showing the relationships between threads.</p>
+            </div>
+
+            <p>These threads make use of both a DataManager class, for concurrent data transfer between the ReceiveThread and HandleThread, and a CassandraCon class, designed as an interface to the CQL database, described by these class diagrams:</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/cat.jpg">
+              <p>A UML diagram detailing the structure of the objects involved in the system.</p>
+            </div>
+
+            <p>Secondary to the data handler, we must also consider that new sensors being registered through the website need to be initialised in the Cassandra database. We handle this in the server software too, through a separate system. To do this, we rely on communication between the PHP of the website and the Java code, opening a ServerSocket on a dedicated port. Whenever the PHP running the website receives a new sensor registration, it will notify the waiting Initialisation Manager, which will perform a basic 'INSERT' query using the metadata handed over by the PHP code. It will also initialise the "first_added" bay with the current timestamp.</p>
+            <p>Rather than complicating the design of this class with a UML diagram, we provide the code directly. Notice that this class makes use of the CassandraCon class, allowing a simplified interface to the <a href="https://github.com/datastax/java-driver">Cassandra Java driver</a> provided by DataStax.</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/initialisationmanager.png">
+              <p>The Initialisation Manager listens for a PHP connection and creates new rows in the Cassandra sensor_details table.</p>
+            </div>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/php_initialisation.png">
+              <p>The accompanying PHP code, seen in 'sensor_manager.php', which sends each element of data for a sensor on a new line..</p>
+            </div>
+
+            <p>Finally, for convenience, we can initialise all required threads through a main class as follows:</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/runner.png">
+              <p>The main class for initialising the server system software.</p>
+            </div>
+
+            <div class="subsection-divide"></div>
+
             <h4>The Front-end</h4>
-            <p>Details of how the front end has been built using PHP</p>
+            <p>The system requirements, as specified by our clients, did not include a front-end interface; in a way, this part of the project is exceeding the scope. However, we identified a particular need for such a service as integral to the demonstration of the capabilities of the system. The website for the system is designed solely for the users, and has the following baseline requirements:</p>
+            <ul class="bodylist">
+              <li>Users must be able to sign up securely</li>
+              <li>Users must be able to register new sensors quickly and easily</li>
+              <li>Users should be provided with a way to manage their sensors</li>
+              <li>Users should have easy access to information and download links for the APIs</li>
+              <li>Users should be able to browse public data with a search function</li>
+            </ul>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/frontpage.jpg">
+              <p>The main page for the System website.</p>
+            </div>
+
+            <p>The resulting website is currently live, and can be viewed <a href="http://victokoh.cs.ucl.ac.uk/sensors/">here</a>, with the source code available on <a href="https://github.com/GulliverJ/sensors"> GitHub</a>. The user-friendly interface offers easy navigation between all pages, with a responsive design built using Bootstrap libraries for mobile convenience. The website's backend is almost entirely run from the Users SQL database, detailed above, with a PHP backend. Our PHP code handles user registration, log-in sessions, sensor initialisation, and a basic search function. However, we have also made use of our RESTful API in order to retrieve real-time data from the Cassandra tables and display it on the Management portal.</p>
+
+            <p>Signing up requires just four fields - a username, contact name, password, and email address - and immediately takes users to the Management Portal</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/management_portal.jpg">
+              <p>The management portal; the main page from which users can manage the sensors they own on the network.</p>
+            </div>
+            <p>There are three main features of the management portal:</p>
+            <ul>
+              <li>The 'My Sensors' table, displaying information about sensors this user owns on the network
+                <ul>
+                  <li>This table will display basic metadata for sensor identification, along with the latest reading and timestamp, as read from the Cassandra database. The timestamp will be coloured red in the event that it is over 24 hours old, as an alert of inactivity. Data retrieval from the Cassandra database is handled through JavaScript (specifically the getJSON method from the JQuery library), making use of our RESTful API. We're also running an AJAX system, to ensure the data is auto-updated in realtime.</li>
+                </ul></li>
+              <li>The 'Unique Identifier'
+                <ul>
+                  <li>This is the unique, randomly generated alpha-numerical code that users must send at the beginning of any data strings sent by their sensors to our system. We use this code to ensure that the data we receive is in fact intended for us, and also to gather further data on how to store it. The code is generated through a basic PHP function found in 'signup.php'.</li>
+                </ul>
+              </li>
+              <li>The 'Register New Sensors' button
+                <ul>
+                  <li>This button simply takes the user to a form where they can initialise a sensor's metadata. The form is shown below, and comprises of an optional application label, a limited list of what the sensor measures (e.g. temperature, distance, acceleration...), the standard unit the measurement is recorded in (e.g. kelvin, metres, metres per second squared...) and its precise location. Using the Google Maps Javascript API, we have added a drag-and-drop marker to greatly simplify the process of indicating a sensor's location, as the coordinates must have 6 decimal points of accuracy.</li>
+                </ul>
+              </il>
+            </ul>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/addsensors.png">
+              <p>The form for registering new sensors. The application label "Orange Parking" was used for our <a href="demo.html">demonstration application</a></p>
+            </div>
+
+            <p>Overall, the website fully meets our self-identified requirements, though there are many improvements to be made in future, as detailed in the <a href="collab.html#goals">'Future Goals'</a> section. As with all other aspects of this design, the source files can be found in our GitHub repo.</p>
+
+            <div class="subsection-divide"></div>
+
             <h4>The Java API</h4>
-            <p>How I went about designing and building the Java API</p>
+            <p>The APIs are critical to the requirements of the system. Easy public access to the data held within the database is indeed the keystone for the entire project, and the specific issue that our clients are looking to solve.</p>
+            <p>We produced a Java API to allow for resource-intensive analytics or processes on a medium-scale. With a library of almost 30 methods, we offer both public and authenticated access to data, meaning that unregistered developers can access data to use in their projects, and registered users can enjoy the additional features such as limiting their queries to only sensors they own.</p>
+            <p>The key design points are as follows</p>
+            <ul class="bodylist">
+              <li>Methods to retrieve a list of global_ids belonging to sensors as filtered by:
+                <ul>
+                  <li>Application label</li>
+                  <li>Measure type</li>
+                  <li>Unit</li>
+                  <li>Timestamp, as a defined date range</li>
+                </ul>
+              </li>
+              <li>Methods taking a list of global_ids as a parameter and returning a matching list of each sensor's latest reading</li>
+              <li>Methods taking a single global_id as a parameter and returning any element of metadata, such as its unit</li>
+              <li>Methods taking a single global_id as a parameter and returning any amount of archive data, as specified by a timestamp range</li>
+            </ul>
+            <p>A guide for best practice when using the Java API, along with full and detailed documentation, can be found on the <a href="docs.html">documentation page</a>.</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/example_java_code.png">
+              <p>With only 3 lines (6 - 8) the Java API can be used to retrieve a filtered list of sensor IDs and their latest readings for any number of sensors.</p>
+            </div>
+
+            <p>The above code demonstrates how simple the Java API is to use, taking only a few lines to retrieve a filtered list of sensor IDs and their matching latest readings. These are only two methods from a library of over 20, using the public class alone.</p>
+
+            <div class="subsection-divide"></div>
+
             <h4>RESTful API</h4>
-            <p>Victoria ought to do this really</p>
+            <p>To be completed by Victoria.</p>
             <h3>Implementing Hardware</h3>
             <p>Whilst specific pieces of sensor hardware are certainly likely to be different - by reading different types of data and being designed to be used in different ways - there are some key elements to our system design that must be obeyed in order to work with the system. We developed sensor hardware as parking bay monitors, to be used in conjunction with our <a href="demo.html">Smart-Parking application</a>, and have detailed the important design aspects here. Anyone wishing to build hardware to use with this system must follow the same basic principles in order to ensure compatability.</p>
+
+            <p>JOHAN: Use this section to talk about the specific hardware configuration requirements (along with general design suggestions, e.g. using contiki to form a local network of low-power sensors, then having a single internet-enabled zone controller handle the data transfer), and the Hardware section on demo.html for talking about the specifics of the use-case hardware</p>
 
             <!-- Technical Achievements -->
             <h2>Technical Achievements</h2>
             <a class="anchor" id="ach"></a>
             <hr>
-            <ul>
-              <li>Hardware: 
-                <ul>
-                  <li>The hardware we used</li>
-                  <li>How we put it together</li>
-                  <li>Details of the firmware</li>
-                </ul>
-              </li>
-              <li>Software:
-                <ul>
-                  <li>System backend software and what it does, how it works</li>
-                  <li>Registration website</li>
-                  <li>Java API</li>
-                  <li>Node API</li>
-                </ul>
-              </li>
-            </ul>
+            <h4 style="font-weight: lighter">In developing this system, we've broken ground on a lot of significant technical developments. Through our open system, developers can take control over the environments they live in with new-found power and intelligence, truly transforming the digital urban landscape.</h4>
+            <h4>A fully flexible, crowd-sourced sensor network</h4>
+            <p>The sensor network we've developed is unlike any other, offering unlimited growth and wide hardware support. We've strived to design a simplified system making it easy for developers with any level of experience to get their hardware up and running, sharing data with the world in a matter of minutes. Data aggregation on this scale has never been done before.</p>
+            <h4>Scalability first</h4>
+            <p>With our network design, the system accesses potentially unlimited reach. Wherever there is an internet connection, there can be sensors. Apache Cassandra allows us to easily expand the server network, with unparalleled reliability and convenience.</p>
+            <h4>Standardised environmental data</h4>
+            <p>Though a complex, rich bank of environmental data is often provided by governments worldwide, it is typically sequestered away or split amongst multiple providers. Our system standardises the process, delivering data in a the same format from the same location, greatly simplifying the process of writing analytics as a developer.</p>
+            <h4>Truly public access, anywhere, any time</h4>
+            <p>The two APIs we've provided with this proof-of-concept are just the beginning. The datasets we're storing are remarkably large, and will offer innovative aspects of big data research through analytics - never before have developers been able to explore how daily pollution levels can unexpectedly affect traffic flow across a city in so few lines of code.</p>
+            <h4>Encouraging humanitarian attitudes</h4>
+            <p>A more sociological development, the ease with which private companies can now contribute to the positive improvement of our urban environments simply by using our system to store their data publicly could certainly inspire a greater acceptance by the wider community.</p>
 
-            <!-- Testing and Evaluation -->
-            <h2>Testing and Evaluation</h2>
+            <!-- Testing -->
+            <h2>Testing</h2>
             <a class="anchor" id="test"></a>
             <hr>
-            <ul>
-              <li>Hardware testing</li>
-              <li>Software testing (JUnit tests etc.)</li>
-            </ul>
+            <h4 style="font-weight: lighter">Testing is a hugely important factor in any piece of software. In our case, ensuring optimum efficiency along with secure, reliable code execution is critical; though our proof-of-concept may be small-scale, the design is intended to work at a scale with potentially millions of sensors.</h4>
+            <div class="subsection-divide"></div>
+            <h3>Software Testing</h3>
+            <h4>Visual Testing</h4>
+            <p>Our most frequent form of testing, visual testing concepts simplified the learning process for us in areas where we initially had low experience, and also exposed myriad issues throughout development. One such example was the extensive use of visual testing in the development of the server-side software - careful analysis of code operation led to interesting findings and optimisations of concurrency. Indeed, we owe a lot of our robustness to the benefits of visual testing, and have been able to deliver a product of high quality as a consequence of its careful, critical application.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/packet_receipt.png">
+              <p>The console output of both the system software (receiving packets) and sensor simulator software (10 threads each sending packets every ~10 minutes).</p>
+            </div>
+            <div class="subsection-divide"></div>
+            <h4>Load-testing the server</h4>
+            <div class="subsection-divide"></div>
+            <h4>JUnit testing</h4>
+            <p>Methods in Java software are very easily tested through JUnit, and we made sure to perform multiple JUnit operations as insurance of reliability. The Java API, example, has a high priority for being bug-free, as it is intended to be distributed publicly for developers. Bugs in our singular system program can be fairly easily tackled without a problem, but to issue updates to a library used in potentially tens of thousands of applications is a far more damaging process.</p>
+            <p>In order to formally test the Java API, the majority of methods were planned ahead. These were the methods whose inclusion was compulsory - for example, retrieving sensors by application label - getIDsWhere(String col, String value) - and then retrieving their readings - getLastReading(int id). JUnit tests were then written in advance using a set of mock readings created in the system database, which included 6 sensors each with 5 readings in the archive. This can be seen below.
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/testset.png">
+              <p>The mock entries into the database tables, created for the purposes of extensive API testing. The full details can be found <a href="res/testset_details.txt">here</a>.</p>
+            </div>
+            <p>With these in place, the JUnit tests could be written. Here are four such tests, with the set up and tear down:</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/junit-methods.png">
+              <p>The console output of both the system software (receiving packets) and sensor simulator software (10 threads each sending packets every ~10 minutes).</p>
+            </div>
+
+            <!--  > int list returned unordered list due to timestamp ordering in CQL; fixed
+  > Issue with parsing dates resolved
+  > Issue with parsing dates in a query; requset long instead -->
+            <h4>Long-term testing through our use-case</h4>
+
+
+            <div class="subsection-divide"></div>
+
+            <h3>Hardware Testing</h3>
+
+            <!-- Evaluation -->
+            <h2>Evaluation</h2>
+            <a class="anchor" id="eval"></a>
+            <hr>
+            <h3>Successes</h3>
+
+            <div class="subsection-divide"></div>
+
+            <h3>Areas for Improvement</h3>
+
           </div>
         </div>
       </div>
