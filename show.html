@@ -251,7 +251,7 @@ public static void main(String[] args)
             </table>
             <p>Again, the schema for this database can be downloaded <a href="res/orangesystem.sql">here</a>.</p>
             <p>The Cassandra database we've used has a slightly more complex structure, owing to its NoSQL concepts. Cassandra is well-documented, in terms of its data model and installation, so we won't labour the basics here. In fact, Cassandra was chosen partly due to its relatively wide level of documentation, along with its support for additional software like Hadoop and Druid, to be used for later analytics. Cassandra also provides flexible scalability, greatly simplifying the process of server expansion by automated data sharing across server nodes.</p>
-            <p>Here's a closer look at the columnfamily designs. Note that the sensor_details columnfamily shares many columns with te Sensors table in the SQL database - for this reason, shared columns will be omitted.</p>
+            <p>Here's a closer look at the columnfamily designs. Note that the sensor_details columnfamily shares many columns with the Sensors table in the SQL database - for this reason, shared columns will be omitted.</p>
 
             <p style="font-weight: bolder">Sensor_details table</p>
             <table>
@@ -293,7 +293,7 @@ public static void main(String[] args)
               </tr>
             </table>
 
-            <p>The schema for this database can be found <a href="#">here</a> and the columnfamily descriptions can be seen <a href="#">here</a>.</p>
+            <p>The schema for this database can be found <a href="res/cql_schema.txt">here</a>.</p>
 
             <p>With these databases implemented, we can now develop the server-side software which handles data input.</p>
 
@@ -306,19 +306,19 @@ public static void main(String[] args)
               <li>Processing the packets to ensure they contain valid data</li>
               <li>Checking how to organise the data and inserting it correctly</li>
             </ul>
-            <p>We've written the server-side software in Java, in order to make use of its concurrency support and access to connectivity libraries for easy networking. In our software we've implemented a dedicated thread to handle each one of the three points given above; a single <span style="font-weight: bolder">Listener thread</span> will wait for input, and store the packets in a DataManager object, using concurrency implementations to ensure a safe transfer of data. Once there is data held within the manager, a <span style="font-weight: bolder">Handler thread</span> will be notified, and will take from the list using a first-in, first-out approach. The Handler thread takes care of checking the identifier sent at the beginning of the string against the Users database, to ensure it matches a valid user. If a user exists for the given identifier, an <span style="font-weight: bolder">Input thread</span> will be created to insert the readings contained within that packet. This involves first using the identifier to look up the global sensor ID for each reading. The 'sensor_details' table will then be updated with the latest reading, and the 'data_archive' table will receive a new row for the data.</p>
+            <p>We've written the server-side software in Java, in order to make use of its concurrency support and access to connectivity libraries for easy networking. In our software we've implemented a dedicated thread to handle each one of the three points given above; a single <span style="font-weight: bolder">Receive thread</span> will listen and wait for input, and store the packets in a DataManager object, using concurrency implementations to ensure a safe transfer of data. Once there is data held within the manager, a <span style="font-weight: bolder">Handle thread</span> will be notified, and will take from the list using a first-in, first-out approach. The Handler thread takes care of checking the identifier sent at the beginning of the string against the Users database, to ensure it matches a valid user. If a user exists for the given identifier, an <span style="font-weight: bolder">Input thread</span> will be created to insert the readings contained within that packet. This involves first using the identifier to look up the global sensor ID for each reading. The 'sensor_details' table will then be updated with the latest reading, and the 'data_archive' table will receive a new row for the data.</p>
             <p>Here's a more descriptive sequence diagram of the software approach.</p>
 
             <div class="imgborder">
-              <img class="img-responsive img-rounded" src="img/cat.jpg">
+              <img class="img-responsive img-rounded" src="img/sequence_diagram.png">
               <p>A sequence diagram for the system software, showing the relationships between threads.</p>
             </div>
 
             <p>These threads make use of both a DataManager class, for concurrent data transfer between the ReceiveThread and HandleThread, and a CassandraCon class, designed as an interface to the CQL database, described by these class diagrams:</p>
 
             <div class="imgborder">
-              <img class="img-responsive img-rounded" src="img/cat.jpg">
-              <p>A UML diagram detailing the structure of the objects involved in the system.</p>
+              <img class="img-responsive img-rounded" src="img/uml_kindof.png">
+              <p>A UML diagram detailing the structure of the objects involved in the system and how they're shared.</p>
             </div>
 
             <p>Secondary to the data handler, we must also consider that new sensors being registered through the website need to be initialised in the Cassandra database. We handle this in the server software too, through a separate system. To do this, we rely on communication between the PHP of the website and the Java code, opening a ServerSocket on a dedicated port. Whenever the PHP running the website receives a new sensor registration, it will notify the waiting Initialisation Manager, which will perform a basic 'INSERT' query using the metadata handed over by the PHP code. It will also initialise the "first_added" bay with the current timestamp.</p>
