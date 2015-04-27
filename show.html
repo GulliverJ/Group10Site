@@ -509,12 +509,27 @@ public static void main(String[] args)
             <h4 style="font-weight: lighter">Throughout this project, we've overcome many challenges and provided a working, feasible proof of concept design for our clients. Performing a requirements review highlights how we have been able to target the specific issues identified in the brief.</h4>
             <div class="subsection-divide"></div>
             <h4>A Plug and Play Architecture</h4>
-            <p>We've achieved this through the culmination of multiple design features. To begin, AHHHHH</p>
+            <p>We've achieved this through the culmination of multiple design features. First of all, by providing a web service for user sign-up and a remarkably simple sensor registration system. As well as providing a standardised set of metadata, this means that sensors can begin sharing their data in as few as three steps. The second step, of course, is to modify the firmware such that it sends a string in a particular format - with its own ID and the user's identifier. This process of course requires a certain level of technical ability, but there are certainly abstraction layers that can be built, for example in the form of a GUI, to streamline the process. After that, all that's left is to turn it on. In our demonstrations we are able to register as a user, initialise a sensor, set the firmware, and have data being sent all within a few tens of seconds. All of this comes with added benefits of the data being automatically validated, sorted, and standardised for public use.</p>
+            <h4>Scalability</h4>
+            <p>yep, it's scalable</p>
+            <h4>A mesh of data</h4>
+            <p>Yep, check out sick databases</p>
+            <h4>Full public accessibility</h4>
+            <p>We've made it as easy as we could have, yo</p>
 
             <div class="subsection-divide"></div>
 
             <h3>Areas for Improvement</h3>
-
+            <h4 style="font-weight: lighter">As with any time-limited project, we'll never feel satisfied that we've explored all of the corners and ironed the creases. As we went along the project, many new and interesting ideas sprang forth. Sadly, we had to place the line somewhere. Here are some areas we feel deserve more attention.</h4>
+            <h4>System software administration</h4>
+            <p>Currently, the system software has no interface. It's simply a piece of code that is set running and left to loop for eternity. Even as we were building it, we were implementing the tools for developing a command-line interface at the very least. Expanding this, and providing stronger administrator control, is certainly at the top of our priorities list for additions.</p>
+            <h4>Usability improvements for the website's Management Portal</h4>
+            <p>The management portal has great potential to be a one-stop-shop for all of a user's needs when it comes to interacting with the system. Right now, its functionality is limited to basic sensor monitoring and registration. We'd like to add a filtering or search feature for checking up on specific sensors, the option to activate/deactivate sensors, and controls over system notifications. Users could, for instance, set an automated alert to be emailed to them if a sensor they own hasn't sent an update for the past two hours. Small upgrades like this would really help to transform the attraction of the greater system.</p>
+            <h4>Support for TCP connections as well as UDP</h4>
+            <p>As seen in our <a href="#test">load testing</a> section above, it became apparent that a more secure connection option would be desired by a number of developers using the system. The protocols required for allowing TCP connections would add an extra layer of complexity to the plug-and-play nature, but if reliability is key, the sacrifices fade into insignificance. With a more secure connection, we can also offer a greater capacity for protection against malicious or spam data contributions.</p>
+            <div class="subsection-divide"></div>
+            <br>
+            <p>That's all from the showcase - we hope it's been informative and engaging. Be sure to look at our <a href="demo.html">demonstration application</a> to see everything in action and explore for yourself!</p>
           </div>
         </div>
       </div>
