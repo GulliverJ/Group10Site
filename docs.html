@@ -54,6 +54,7 @@
                   <li><a href="#network">Building the Network</a></li>
                   <li><a href="#webapi">Web API</a></li>
                   <li><a href="#javaapi">Java API</a></li>
+                  <li><a href="#hardware">Hardware</a></li>
                 </ul>
             </div>
           </div>
@@ -86,6 +87,186 @@
             <ul>
               <li>All documentation and guidelines for using the Java API</li>
               <li>Along with examples</li>
+            </ul>
+            
+             <!-- Hardware -->
+            <h2>Orange Sensors Hardware</h2>
+            <a class="anchor" id="hardware"></a>
+            <hr>
+            <ul>
+              <h3>The MC1322x micro-controller</h3>
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/MC1322.jpg">
+              <p>For our project we decided to go with a MC1322x micro-controller. This controller was developed by Freescale as a tool for handling small scale ZigBee communications and sensor control. </p>
+              <p>The reason for choosing this specific controller was because early research showed that it was compatible with Contiki, which we were planning to use. 
+              Our professor Graeme McPhillips created a board around the controller to allow us to access the different ports more easily. The board is shown below:</p>
+              <p><img class="img-rounded" src="img/Stampback.png"> <img class="img-rounded" src="img/Stampfront.png"></p>
+              <p>For full documentation on the mc1322x refer to the <a href="img/MC1322x.pdf" >documentation pdf</a></p>
+              <p>For full documentation on the Stamp board refer to the <a href="img/stamp.pdf" >documentation pdf</a></p>
+              <h3>Contiki</h3>
+              <p>Contiki is the software we used to control the micro-controller. 
+              The basic idea of Contiki is to provide a set of libraries to take care of low level control of the microcontroller. 
+              It skips the step of configuring every input and output of the device so that we are left with easy to use functions for operating ADC inputs and ZigBee.</p>
+              <p>For full documentation on Contiki, refer to their website: http://www.contiki-os.org/</p>
+              <h3>Infra-Red</h3>
+              <p>For our project we went with infra-red to determine the state of our parking bay. 
+              Infra-Red allows for a low cost, easy to implement way of determining the state of a car simply by reading a distance measurement.</p>
+              <p>The below sensor is the one we used for our project. It is called the Sharp 2Y0A02 Distance Sensor:</p>
+              <p><img class="img-rounded"src="img/IR.JPG" > <img class="img-rounded" src="img/IRpin.JPG"></p>
+              <p>For full documentation on the device refer to the <a href="img/sharp_gp2y0a02.pdf" >documentation pdf</a></p>
+              <p>Control of this device is done via Contiki and the micro-controller, which is shown in our tutorial section.</p>
+              <h3>ZigBee</h3>
+              <p>For our project we went with ZigBee to handle communications between the different sensor units. 
+              It does not handle communication with the Arduino, as that is done with a simple serial connection. </p>
+              <p>We went with ZigBee, because it is designed for low power use cases like ours and the Contiki library allowed for easy implementation of this.</p>
+              <p>It is the ideal communication protocol for this kind of project, as the range is well within what would be required for parking applications. 
+              For use cases unrelated to parking and where distances exceed ~100m per sensor, using other communication devices is recommended. </p>
+              <p>For our project we went with ZigBee to handle communications between the different sensor units. 
+              It does not handle communication with the Arduino, as that is done with a simple serial connection. </p>
+              <p>For full documentation on ZigBee, refer to the <a href="img/ZigBee.pdf" >documentation pdf</a></p>
+              <h3>Arduino</h3>
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/ArduinoLogo.png" >
+              <p>We used the Arduino in our system to act as our zone controller. 
+              For the sake of demonstration, we had to handle global communication via a computer due to the service being down for the shield we were planning to use.
+              We used the Arduino Mega along with a Arduino GSM shield:</p>
+              <p><img class="img-rounded"src="img/GSMShieldFront.jpg" > <img class="img-rounded" src="img/GSMShieldBack.JPG"></p>
+              <p>In a real life implementation of this project, it is recommended to use something smaller than the Arduino, as it draws unnecessary amounts of power.
+              The best thing to do would be to attach a GSM shield directly to your sensor unit, instead of using the Arduino as a medium. For the sake of simplicity we chose to use Arduino.</p>
+              <p>For more information on Arduino, refer to their website: <a href="http://www.arduino.cc">www.arduino.cc</a></p>
+              <h2>Building the Hardware tutorial:</h2>
+              <p>The following section will show you how to assemble the hardware we used to prepare for coding. We will assume that you have the following things to be able to create the hardware:</p>
+              <li>The Stamp board (Created by Grame McPhillips)</li>
+              <li>A Sharp 2Y0A02 Distance Sensor</li>
+              <li>A 5V battery pack (or create one like we did in the below section)</li>
+              <li>Wiring</li>
+              <li>2.2 and 1.2 ohm resistors</li>
+              <li>Soldering Iron</li>
+              <li>electrical tape (optional)</li>
+              <li>a 3.3V to 5.0 V converter (created by Graeme McPhillips)</li>
+              <li>Arduino Mega (other boards are available if you choose to not use a shield)</li>
+              <h3>Attaching Sensors to the board.</h3>
+              <p>To attach the sensors to the Stamp board, you will have to connect it to the right input. Refer to the 
+              <p>For full documentation on the Stamp board refer to the <a href="img/stamp.pdf" >pdf</a> or use the below diagram:</p>
+              <p><img class="img-rounded" src="img/Stampback.png"> <img class="img-rounded" src="img/Stampfront.png"></p>
+              <p>In the top left corner, there are 2 connections 10,T15 and 9,T16. These two connections are for ADC signals, which is the kind of signal produced by infra red sensors.</p>
+              <p>To run, the infra-red sensor needs a 5V power supply, but we only want a returned 3.3V signal to our ADC channel. To get around this, we have to lower the voltage using ohm resistors. 
+              To do this, wire everything up using this circuit diagram:</p>
+              <p><img class="img-rounded" src="img/IRCircuit.png"></p>
+              <p>The 5V power supply can be found on g,T17, the ground can be found on h,T18 and the ADC input can be found on 10,T15. </p>
+              <h3>Creating and attaching the 5V battery</h3>
+              <p>This step is not necessary if you plan to power the device from your computer only. Of course for the parking application, we need a battery.</p>
+              <p>To create our battery pack, we started off by taking 4 batteries in a prebuilt pack as shown here:</p>
+              <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/BatteryPackFront.jpg"> </p>
+              <p>This provides 6V, which is a little too high for our board to handle. To lower the voltage, we attached a board at the back that would allow us to wire a capacitor and a DC-DC converter to lower the voltage. 
+              This can be seen in the following picture: </p>
+              <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/BatteryPackBack.jpg"> </p>
+              <li>The first row from the left is connected to our ground output plug (the one that you attach the ground wire to), the left most connection of the DC-DC converter (outputs the ground) and to the ground of the battery pack.</li>
+              <li>The second row is connected to our 5V output plug (the one that will output 5V), a wire connecting the 2nd row to the 4th row, the middle connection of the DC-DC converter (outputs 5V) and our capacitor. </li>
+              <li>The third row is connected to our 6V output plug (unused), the right connection of the DC-DC converter (takes in 6V) and the other end of the capacitor. </li>
+              <li>The fourth row simply connects the 6V output to our second row.</li><p></p>
+              <p>Once the battery has been prepared, we need to create our connectors and attach them to the stamp. First, attach a cable to g,T17. 
+              This is the connection where we can input 5V. Second, attach a cable to h,T18. This is the connection to the ground. To help illustrate this, here is a circuit diagram:</p>
+              <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/BatteryCircuit.png"> </p>
+              <p>Now whenever you need to power your device, simply plug the 5V into the middle connector on and the ground to the right connector on your battery pack. </p>
+              <p>NOTE: do not power the device using both USB and the battery as this can damage the board.</p>
+              <h3>Connecting the Stamp board to the Arduino Mega</h3>
+              <p>Now that our sensor nodes are ready, its time to wire one of them to the Arduino. As our serial ports only accept and output 3.3V and the Arduino only outputs and accepts 5.0V, we have to do some wiring and attach a voltage converter.</p>
+              <p>The easiest way to show this is with a circuit diagram:</p>
+              <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/ArduinoCircuit.png"> </p>
+              <p>As you can see, a few things are going on here. The 3.3V side of the voltage converter has 4 connections:</p>
+              <li>The top connection is connected to a 3.3V power supply from the Arduino </li>
+              <li>The second wire is connected to 6,T6 which is an RX input</li>
+              <li>The third wire is connected to 5,T5, which is a TX output</li>
+              <li>The bottom one is simply to enable the board so we feed it a 3.3V signal to "turn it on" </li>
+              <p>The 5.0V side of the voltage converter also has 4 connections:</p>
+              <li>The top connection is connected to a 5.0V power supply from the Arduino </li>
+              <li>The second wire is connected to a TX output on the Arduino</li>
+              <li>The third wire is connected to a RX input on the Arduino</li>
+              <li>The rest of the wires are all wired together to ground to avoid random signals. </li>
+              <p>Finally, connect the ground of the Stamp, j,T20 to the ground of the Arduino as shown</p>
+              <p>NOTE: the TX output has to be directly across from the RX input on the volt converter, as we want RX to be connected to TX and vice versa.</p>
+              <p>Now that you have all the hardware set up, you are now ready to do some coding.</p>
+              <h2>Coding firmware onto the Hardware tutorial:</h2>
+              <p>This section will be focused installing software on your computer/boards to allow you to run code on the hardware.</p>
+              <h3>Step 1: installing Contiki OS</h3>
+              <p>To use Contiki, you can do one of two things. You can install the Contiki OS as we did (recommended) or you could just download the folder with all the libraries.</p>
+              <p>To download Contiki, go to their website: <a href="http://www.contiki-os.org/download.html">http://www.contiki-os.org/download.html</a></p>
+              <p>Advantages to installing the OS includes having a node simulator and easier upload of code. 
+              If you are using Windows I especially recommend installing the OS, as it is essentially a version of Ubuntu, which will make coding and prepping the hardware much easier.</p>
+              <p>Once you have installed the OS/library, you will need to get an updated version of the libraries for mc1322x, as they are outdated on the Contiki website. Download the github libraries from here and replace them with your old contiki libraries: https://github.com/malvira/libmc1322x/wiki.</p>
+              <p>Once you have the newer libraries, I would recommend taking a look through the different libraries. There is a lot of stuff going on, but the important directories are:</p>
+              <li>/contiki/cpu/mc1322x/ </li>
+              <li>/contiki/examples/</li>
+              <h3>Step 2: uploading code on the Stamp Board</h3>
+              <p>now that we have our software ready, lets try and upload a test code. If this is your first time uploading to a specific board, you need to first wipe the board. 
+              To do this, navigate to /contiki/cpu/mc1322x/tools/ftditools/ and use the make file to make an upload file of the bbmc.c file.</p>
+              <p>to upload this file to the board type the following string into terminal (make sure you are in the tools directory): </p>
+              <pre>sudo ./mc1322x-load.pl -f /home/user/contiki-2.7/cpu/mc1322x/tools/ftditools/bbmc.bin -t /dev/ttyUSB1</pre>
+              <p>The mc1322x-load.pl is a runnable file that uploads bin files to the board. make sure you get the right port for your USB. Ours happened to be ttyUSB1. </p>
+              <p>Now that this code has been uploaded, the board is wiped and you are able to add new code. If you look in the tests folder, there are loads of test files. to make them usable, run the make file using this command: </p>
+              <pre>make BOARD = freescale-usb</pre>
+              <p>if you do not have the freescale-usb.h header file, get it from here:</p>
+              <p>add it to /contiki/cpu/mc1322x/board/ and change the Makefile.board to include it at the top under ALL_BOARDS </p>
+              <p>once you've clicked make, redirect yourself back to tools and run this code to test your ADC channels: </p>
+              <pre>sudo ./mc1322x-load.pl -f /home/user/contiki-2.7/cpu/mc1322x/tests/adc_freescale-usb.bin -t /dev/ttyUSB1</pre>
+              <p>click the reset button on the board (top button) and your adc readings should now be displayed. channels 1-7 should display junk, while channel 0 displays ADC 0.</p>
+              <p>Here is some example code to read the adc and send it through uart2 serial port:</p>
+              <pre>#include <mc1322x.h>
+#include <board.h>
+
+#include <stdio.h>
+#include "tests.h"
+#include "config.h"
+#include "adc.h"
+
+void main(void) {
+
+    trim_xtal();
+    uart_init(UART1, 115200);
+    uart_init(UART2, 115200);
+    adc_init();
+
+    adc_setup_chan(0);
+    
+    printf("adc test\r\n");
+
+        GPIO->PAD_PU_SEL.U2RX = 1;
+    int i;
+    while(1) {
+
+        adc_service();
+        if(adc_reading[0] > 500)
+        {
+        uart2_putc('a');
+        for(i=0; i<1000000; i++) { continue; }
+        }
+        else
+        {
+        uart2_putc('b');
+        for(i=0; i<1000000; i++) { continue; }
+        }
+    }
+    
+}</pre>
+              <p>now that you know how to upload programs, its time to start coding. You will now have to read through the libraries and learn how the header files should be used. You can use our code here to take an ADC value and send it via serial to the Arduino:</p>
+              <h3>Step 3: uploading code on the Arduino</h3>
+              <p>Uploading code on the Arduino is incredibly simple. Simply install the Arduino program, select your usb connected board under tools/board and you are ready to go. Here is some code we wrote to read the serial port and write it to our computer:</p>
+              <pre>
+void setup() {
+        Serial.begin(115200);     // opens serial port, sets data rate to 9600 bps
+        Serial3.begin(115200);
+}
+
+void loop() {
+        // send data only when you receive data:
+        if (Serial3.available() > 0) {
+                // read the incoming byte:
+                incomingByte = Serial3.read();
+               Serial.println(incomingByte);
+               Serial.println(incomingByteNew);
+       
+        }
+}</pre>
+              <p>We used this to send data to our computer which then handled the UDP section.</p>
             </ul>
 
           </div>
