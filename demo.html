@@ -100,16 +100,16 @@ There are three primary Java classes involved in carrying out the back end analy
 These are:<br>
 	<ul>
 	<li>
-	<strong>Bay</strong> - For creating Bay objects. The number of objects initialised within the Parking class correspond to the
+	<strong>Bay</strong> - <br> For creating Bay objects. The number of objects initialised within the Parking class correspond to the
 	number of Bays within the SQL database 'orangeparking'. This class extends the observable design pattern and
 	is used to notify the Analytics class's observer when a change in state (occupied/ unoccupied) has occurred so
 	an update to the SQL database can occur. 
 	</li><li>
-	<strong>Parking</strong> - Makes an initial connection to the SQL database to retrieve an initial set of data on all bays present. 
+	<strong>Parking</strong> - <br>Makes an initial connection to the SQL database to retrieve an initial set of data on all bays present. 
 	It also includes an update function which accepts a bay object, creates a new connection and updates the bay_data's
 	occupied and state_timespan fields based upon bay_id.
 	</li><li>
-	<strong>Analytics</strong> - This class represents the main thread running analytics. An initial call is made to the CQL database
+	<strong>Analytics</strong> - <br>This class represents the main thread running analytics. An initial call is made to the CQL database
 	making use of the JAVA API built. This collects the set of all sensor ids (global_ids) of which matches the Bay objects.
 	A second call to the CQL database is then made via the API. Given the new time stamp retrieved differs from the previous
 	reading's, an assumption is made that an update in the actual CQL database has occurred for that specific sensor id
