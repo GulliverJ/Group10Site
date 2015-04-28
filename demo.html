@@ -89,12 +89,75 @@
             <h2>Using the Java API for analytics</h2>
             <a class="anchor" id="javaapi"></a>
             <hr>
-            <ul>
-              <li>Details about how the Java API was used to retrieve data</li>
-              <li>Details about the analytics performed on the data</li>
-              <li>Code samples</li>
-            </ul>
-            
+				<p>
+					The general process carried out for analytics is as follows: <br>
+The CQL database is accessed twice making use of the JAVA API built, data gained from this is processed in the class
+named 'Analytics' and whether a change of state has occurred along with its associated timestamp is uploaded to a
+separate SQL database hosting parking information.
+				</p><p>
+There are three primary Java classes involved in carrying out the back end analytics for the smart parking app.
+<br>
+These are:<br>
+	<ul>
+	<li>
+	<strong>Bay</strong> - For creating Bay objects. The number of objects initialised within the Parking class correspond to the
+	number of Bays within the SQL database 'orangeparking'. This class extends the observable design pattern and
+	is used to notify the Analytics class's observer when a change in state (occupied/ unoccupied) has occurred so
+	an update to the SQL database can occur. 
+	</li><li>
+	<strong>Parking</strong> - Makes an initial connection to the SQL database to retrieve an initial set of data on all bays present. 
+	It also includes an update function which accepts a bay object, creates a new connection and updates the bay_data's
+	occupied and state_timespan fields based upon bay_id.
+	</li><li>
+	<strong>Analytics</strong> - This class represents the main thread running analytics. An initial call is made to the CQL database
+	making use of the JAVA API built. This collects the set of all sensor ids (global_ids) of which matches the Bay objects.
+	A second call to the CQL database is then made via the API. Given the new time stamp retrieved differs from the previous
+	reading's, an assumption is made that an update in the actual CQL database has occurred for that specific sensor id
+	associated with a bay. Whether it is occupied or not is then worked out via the sensor reading retrieved. This
+	then calls the specific Bay object's setOccupied function and the SQL parking database is updated.
+	</li>
+	</ul>
+</p>
+<p>
+At present, the majority of analytics is performed within a read-only SQL view table.
+There are two key reasons for this choice. Other than calculating whether a bay is 'occupied' (1 | 0) and the time this state change occurred, all other information of interest to be displayed on our web app is already implicitly known and can be calculated
+in a less resource heavy fashion. Views also update via lazy evaluation, 'on the spot' when called by PHP server-side code on our web app. This is better suited for our purposes in providing time sensitive information immediately such as the 'time remaining' one can remain occupied in a bay.   
+</p><br>
+<p>
+The information provided within the view table includes:
+<br>
+<ul>
+<li>
+The nearest available bay <br>
+	This is worked out given the current state of a bay. If a bay is unoccupied, then it itself is its nearest
+	available bay. Consequently, given a bay is occupied, a list of all unoccupied bays within the area are found 
+	and making use of basic pythagorus, the next nearest available bay is identified.
+</li><li>
+	Time remaining <br>
+	Given a restriction_id and that max_stay is not NULL within the restrictions table of the SQL Parking database,
+	Time remaining represents the amount of time left (in seconds) one can be within an occupied bay state while still being 		'legally parked'.
+	Likewise, this is only calculated if a bay is occupied. Otherwise if it is unoccupied and max_stay does not list a 
+	time restriction, it is set to NULL.
+</li><li>
+Legally occupied<br> 
+	The legally occupied field is calculated based on three different conditions.
+	Provided a bay is indeed occupied:
+		If the current time of occupation exists outside of the restriction start and end timings,
+		no restrictions apply. 
+		Else if occupation occurs within restricted hours, given the time remaining in seconds when the difference is
+		taken from max_stay is still positive, legally occupied is set to true.
+	Otherwise, it is set to NULL.
+</li><br>  
+Additional: <br>
+<li>
+Restricted <br>
+	Calculates whether restrictions are currently active for a specific bay (joined to a specific restrictions_id)
+</li>
+</ul>
+The schema for the overall orangeparking database can be found here:
+		//input link
+			
+</p>            
             <!-- Simulator -->
             <h2>Simulating Sensors</h2>
             <a class="anchor" id="simulator"></a>
