@@ -424,8 +424,11 @@ public static void main(String[] args)
             <p>To be completed by Victoria.</p>
             <h3>Implementing Hardware</h3>
             <p>Whilst specific pieces of sensor hardware are certainly likely to be different - by reading different types of data and being designed to be used in different ways - there are some key elements to our system design that must be obeyed in order to work with the system. We developed sensor hardware as parking bay monitors, to be used in conjunction with our <a href="demo.html">Smart-Parking application</a>, and have detailed the important design aspects here. Anyone wishing to build hardware to use with this system must follow the same basic principles in order to ensure compatability.</p>
-
-            <p>JOHAN: Use this section to talk about the specific hardware configuration requirements (along with general design suggestions, e.g. using contiki to form a local network of low-power sensors, then having a single internet-enabled zone controller handle the data transfer), and the Hardware section on demo.html for talking about the specifics of the use-case hardware</p>
+			<h4>Sending your data</h4>
+            <p>To send your data, for now you must send it as a UDP string. It is recommended that you use anywhere from 1-10 sensors per zone controller. This means you have 1 device handling global upload of 10 devices. Using only 1 is of course less efficient to using 10, but using more than that will slow down the rate at which data will be send, as there is a small delay between each device. Technically there is no restriction as to how many you can connect, but add more at your own risk.</p>
+            <h4>Specific Hardware </h4>
+            <p>When it comes to selecting the hardware for your system, your possible choices are very broad. The only real restriction is the kind of data you are reading. For the parking application, you must send your data as a distance. This means if you are determining the state of your parking bay using a binary case or other more complicated methods, then the system will not work. You are free to use other distance measurers than infra-red, just be advised that measuring with ultrasound can be unreliably against rough surfaces.
+            <p>As long as you are able to send data via UDP, you can use any microcontroller/sensor combination of your liking. The tutorials we provide and recommend require you to use very specific Hardware however.
 
             <!-- Technical Achievements -->
             <h2>Technical Achievements</h2>
@@ -500,7 +503,72 @@ public static void main(String[] args)
             <div class="subsection-divide"></div>
 
             <h3>Hardware Testing</h3>
-
+			<h4>Load Testing</h4>
+			<p>Some of the tests we did for the hardware were load tests. These served the purpose of testing just how much we can push the system and allow us to set boundaries in terms of what we allow the system to do.</p>
+			<h5>ZigBee load test</h5>
+			<p>One of the load tests we did was on the ZigBee network. The testing involved sending data at different rates to see how many went through successfully. What we found was that we were able to send data at an incredible rate, far exceeding what we would ever need to send.</p>
+			<p>In a test, we send 100 readings in 1 second. Already, this would be far more than we would ever need. At most, 1 zone controller would not have more than 10 sensors anyways. Since we put a delay of around 15 seconds on how often data can be send from each node, the zone controller would at most only ever receive 1 reading from each node a second.</p>
+			<h5>Serial ports load test</h5>
+			<p>For our hardware, we used serial ports in 2 instances: </p>
+			<li>To send data from our stamp to our Arduino. </li>
+			<li>To send data from our Arduino to our Computer </li>
+			<p>In both instances, we were able to send at a baud rate of 115200. This is again far higher than we would ever need, meaning we were able to send data reliably.</p>
+			<p>One thing we did find was that when communicating between our computer and the Arduino, the data would sometimes duplicate itself in the first or second reading. To get around this, we simply ignore those initial readings, as this only occurs on startup.</p>
+			<h4>Sensor Accuracy</h4>
+			<h5>Range</h5>
+			<p>The first thing we tested was the range. 
+			The recommended range for the Sharp 2Y0A02 Distance Sensor is 20-150cm. What we found was that if the reading went below that, it would start reading false high values:</p>
+			<table>
+              <tr class="head">
+                <th style="width: 50%">Expected reading (cm)</th>
+                <th style="width: 50%">Actual reading (cm)</th>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>60</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>50</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>100</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>150</td>
+                <td>150</td>
+              </tr>
+              <tr>
+                <td>200</td>
+                <td>150</td>
+              </tr>
+              <tr>
+                <td>300</td>
+                <td>150</td>
+              </tr>
+            </table>
+			<p>As seen, this could become a problem, as the sensor being covered could be misunderstood for being occupied. The reading is luckily above what we accept as occupied, so if a cars wheel is covering it, it would be read as occupied still. Another thing to note is that the only way it could be covered with our current configuration would be if a wheel of the car was in the center of a parking bay, which would be an illegal way to park either way.</p>
+            <h5>Surfaces</h5>
+            <p>What we found was that the sensor was surprisingly accurate despite different types of surfaces. Below are examples of tests returning correct values:</p>
+            <img class="img-responsive img-rounded" src="img/SensorSurf1.png">
+            <img class="img-responsive img-rounded" src="img/SensorSurf2.png">
+            <p>As you can see, it pretty much covers all types of surfaces. The only thing that seems to matter when it comes to reflecting off surfaces is the distance. This is because infra-red sends a scatter of beams and as long as one of them returns, it is able to read that.</p>
+            <p>We also tested difference materials of surfaces. Surprisingly, it worked on most surfaces. The only one it had trouble with was see through material like glass, but as long as people wont be parking invisible cars, we should be fine.</p>
+            <h4>Sensor set up configurations</h4>
+            <p>The next thing we tested was the different setups possible with ZigBee. Below are a few of the configurations we tested:</p>
+            <img class="img-responsive img-rounded" src="img/SensorConfig.png">
+            <p>As you can see, the possibilities are endless. As we have already proven, each node can handle far more data than is ever required here. Even if we had 10 nodes all pointing to one node, it would still easily be handleable.</p>
+            <p>The configuration we choose comes down to the kind of parking lot we are dealing with. Its just a matter of changing the code a little for each setup.</p>
+            
             <!-- Evaluation -->
             <h2>Evaluation</h2>
             <a class="anchor" id="eval"></a>
