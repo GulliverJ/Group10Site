@@ -88,6 +88,10 @@
             <h3>Download</h3>
             <p>Before you do anything, make sure you download the API <a href="https://github.com/GulliverJ/OrangeSensorsJavaAPI">here</a>. All you really need is the orange-java-api.jar, but the source code is included should you wish to experiment for yourself.</p>
 
+            <h3>Full documentation specification (JavaDoc)</h3>
+            <p>The full documentation page for each class and method can be viewed <a href="res/java-api-doc/index.html">here</a>.</p>
+            <p>Read on to see how to initialise your Java project to use the API, and find example code for best approach</p>
+
             <h3>Getting Started</h3>
             <p>Before you begin, you'll need to make sure you have some support for Maven installed. We're using Eclipse as a Java IDE, and downloads for Maven integration are <a href="https://maven.apache.org/eclipse-plugin.html">here</a>.</p>
             <p>Once in Eclipse, we need to set up a simple Maven project. Press CTRL-N or right-click the Package Explorer before selecting "Other".</p>
@@ -108,11 +112,48 @@
               <p>Initialise the project details</p>
             </div>
 
-            <ul>
-              <li>All documentation and guidelines for using the Java API</li>
-              <li>Along with examples</li>
-            </ul>
-            
+            <p>Now we need to edit the pom.xml file to add a dependency for the Cassandra Java Driver. This is a simple process of selecting pom.xml in the Package explorer, choosing the pom.xml tab shown in the main panel, and pasting this code before the closing project tag:</p>
+            <pre>
+&ltdependencies>
+  &ltdependency>
+    &ltgroupId>com.datastax.cassandra&lt/groupId>
+    &ltartifactId>cassandra-driver-core&lt/artifactId>
+    &ltversion>2.1.4&lt/version>
+  &lt/dependency>
+&lt/dependencies&gt
+            </pre>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_4.png">
+              <p>Set the dependencies to add in the Cassandra Java Driver</p>
+            </div>
+
+            <p>Now we need to add the API to our build-path. Open the build path panel by right-clicking the project and going to Build Path -> Configure Build Path</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_5.png">
+              <p>Configure the build-path to include the API</p>
+            </div>
+
+            <p>From this page, select the 'Libraries' tab and click 'Add External Jars'. Navigate to the orange-java-api.jar file you downloaded earlier, and select it.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_6.png">
+            </div>
+
+            <p>Click 'okay' on any remaining windows, and you'll see the Jar appear in the package explorer. Now, we're ready to start writing code. All that's left is to import the API in any classes you'll need to use it in. Go ahead and create a main class and import the API. Read on to find more information on the best practice for using the API.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_7.png">
+              <p>Import the API</p>
+            </div>
+
+            <h3>Using the API</h3>
+            <p>All documentation for the API can be found <a href="res/java-api-doc/index.html">here</a>, so we'll spare the finer details of what each class contains. The important class to know about is OrangeConnection, which contains the majority of data-accessing methods.</p>
+            <p>The suggested approach to accessing the data is to first retrieve a filtered list of IDs from sensors you want to check data for. This can be done using the "getIDs*" methods, for example getIDsWhere(). Once you have this list, you can then perform operations on it for accessing any element of data, for example the latest reading.</p>
+            <p>This code demonstrates a use of the API to access and print out data for any sensors whose application is 'Orange Parking', the application used by our example Smart Parking app.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/java_api_code.jpg">
+              <p>The basics required to retrieve data from the system database.</p>
+            </div>
+
+
              <!-- Hardware -->
             <h2>Hardware</h2>
             <a class="anchor" id="hardware"></a>
