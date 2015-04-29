@@ -170,7 +170,7 @@ public static void main(String[] args)
               </tr>
               <tr>
                 <td>password</td>
-                <td>The user's password, to be encrptyed.</td>
+                <td>The user's password, to be encrypted.</td>
               </tr>
               <tr>
                 <td>contact_name</td>
@@ -421,7 +421,41 @@ public static void main(String[] args)
             <div class="subsection-divide"></div>
 
             <h4>RESTful API</h4>
-            <p>To be completed by Victoria.</p>
+			<p>A REST API was also produced as one of the primary requirements of the system. This was done in order to provide easy and wider public access to sensor data held
+			within the Cassandra database via the well known HTTP protocol. To note, many languages also include JSON libraries for encoding, decoding and manipulating
+			such data. </p>
+
+			<p>As a purely 'public' approach to the REST API has been taken - developers do not have to be registered to .get this data. Information on sensors can be retrieved
+			in terms of their global id relative to the system. </p>
+
+			<p> Key design points to note: </p>
+			
+			<p>Originally, multiple methods were brainstormed for inclusion within this API. To keep it straight forward to use, this was cut down to 8 key methods.</p>
+			<p>These methods include:
+			<ul class="bodylist"> 
+				<li>../all endpoints - to retrieve an entire list of json objects of either the most recent sensor readings or the entire backlog for each individual sensor stored 	in the archive
+				</li><li>~/find/.. endpoints - to retrieve json objects filtered by one of the following:</li>
+					<ul>
+					<li>Individual sensor global id</li>
+					<li>Range of sensor global ids</li>
+					<li>Application type</li>
+					<li>Measurement type</li>
+					</ul>
+				<li>../from endpoints - to retrieve json objects filtered by timestamp from the archive</li>
+
+			<li>For the purposes of our system prototype, this API has been hosted on Heroku.</li>
+			</ul>
+			
+			<p>Further information on usage of this REST API can be found on the <a href="docs.html">documentation page</a>.</p>
+			<p>A general example on usage to retrieve JSON objects can be seen below, making use of the Postman REST client for clarity purposes.</p>
+
+			<div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/postmanJSONtest.png">
+              <p>Data retrieved by making a simple .get call</p>
+            </div>
+
+			 <div class="subsection-divide"></div>			
+			
             <h3>Implementing Hardware</h3>
             <p>Whilst specific pieces of sensor hardware are certainly likely to be different - by reading different types of data and being designed to be used in different ways - there are some key elements to our system design that must be obeyed in order to work with the system. We developed sensor hardware as parking bay monitors, to be used in conjunction with our <a href="demo.html">Smart-Parking application</a>, and have detailed the important design aspects here. Anyone wishing to build hardware to use with this system must follow the same basic principles in order to ensure compatability.</p>
 
@@ -471,6 +505,7 @@ public static void main(String[] args)
             <p>As a consequence of load testing, we have come to the conclusion that support for TCP connections is a must for future versions of the system. UDP is likely to be perfectly practical for regularly updating sensors - e.g. a temperature sensor which updates every 30 seconds or so - because in these situations, losing 5% of packets isn't likely to negatively affect results. Conversely, if a sensor calculates its updates more intelligently (for instance, a parking monitor sending an update only when it's sure it notices a vehicle), delivery of that packet is critical to operation.</p>
             <p>Finally, it's worth noting that the system has been designed with large packets in mind - that is, sending a single data packet containing multiple readings. If users were to have their data sent more economically (for example, ten readings per packet) the maximum data transfer would increase by a factor of the average reading per packet (in this example, x10).</p>
             <div class="subsection-divide"></div>
+			<h3> Unit Testing </h3><br>
             <h4>JUnit testing</h4>
             <p>Methods in Java software are very easily tested through JUnit, and we made sure to perform multiple JUnit operations as insurance of reliability. The Java API, example, has a high priority for being bug-free, as it is intended to be distributed publicly for developers. Bugs in our singular system program can be fairly easily tackled without a problem, but to issue updates to a library used in potentially tens of thousands of externally developed applications is a far more damaging process.</p>
             <p>In order to formally test the Java API, the majority of methods were planned ahead. These were the methods whose inclusion was compulsory - for example, retrieving sensors by application label - getIDsWhere(String col, String value) - and then retrieving their readings - getLastReading(int id). JUnit tests were then written in advance using a set of mock readings created in the system database, which included 6 sensors each with 5 readings in the archive. This can be seen below.
@@ -498,7 +533,66 @@ public static void main(String[] args)
             <h4>Long-term testing through our use-case</h4>
             <p>As a way to demonstrate our Smart Parking application in action, we produced sensor simulator code to simulate the types of input a parking bay monitor might receive. Over a normal distribution of mean 10 minutes, and a standard deviation of 2 minutes, 10 separate threads would change state and send a reading alternating between above and below 40cm. This therefore averaged one insert a minute, and the software was left running for around 8 days before it was first interrupted for important updates. During this time, visual inspection revealed 100% packet transfer, with no exceptions being thrown at any point.</p>
             <div class="subsection-divide"></div>
+			<h4>Frisby.js Testing</h4>
+			
+			<p>In order to automate testing for our Web API, Frisby.js, a REST API testing framework built on node.js and Jasmine was used. This has enabled 
+			rapid testing of individual routes and endpoints during and after the development phase. </p>
 
+			<p>To note, the scope of information which can be retrieved from the REST API is slightly less compared to our other API due to  security and authentication constraints 
+			of our system. </p>
+			<p>
+			The JAVA API enables access to both an SQL database (relevant to the front end of this system, the sensor management portal) 
+			and the CQL database where all sensor data is stored and as such tests for both. In contrast, the REST API provides access
+			to all sensor data from the CQL database singularly and, in the interests of both security and providing wider public availability is partially the reason 
+			user details have been completely separated from the CQL database and placed in an SQL one in order to hide sensitive information from unauthorised read/write via query. 
+			</p><p>
+			Below, a few of the automated tests written in Frisby are provided. In order to carry this out, mock readings were generated in java simulator code for
+			10 different sensor ids to populate the CQL database. This was done to provide an accurate diagnosis on access and correct retrieval of the data_archive where historical data on sensor readings is recorded. 
+			</p>
+			<div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/frisbycodesample.png">
+              <p>A sample of a few of the test methods written using frisby.js.</p>
+            </div>
+
+			<p>
+			<ul>
+			10 different tests were run on the REST API. These were for the most part split into two categories to include:
+			<li>-> General testing methods - ensuring the correct format of json objects was being retrieved. </li>
+			<li>-> Specific testing methods - a subset of the general testing methods, testing specifically for existing json objects and values returned meeting 
+			expected json output. </li>
+			</ul>
+			
+			<div class="imgborder">
+              <img class="img-responsive img-rounded" src="img/frisbytestspassed.png">
+              <p>The command line where tests were executed using Jasmine-node</p>
+            </div>
+			
+			<p>The testing of this API highlighted a few key issues with the database design/ structure and also unique specifics of the CQL language - a subset of SQL.</p>
+			
+			<p>These include:
+			<ul>
+			<li>It was not safe to include any user details such as operator_id within the cassandra database if kept within the same table as meta data on individual sensors.<br>
+			  More generally, given the code is open source and the potential to add onto the current REST API code exists, including said data would not be secure at all.</li>
+			<li>Complex boolean operations and also the AND operator is not always applicable for querying. As a substitute, the IN keyword has been used instead.</li>
+			<li>Due to the way strings are handled as byte arrays, querying with CQL is case sensitive.</li>
+			<li>Due to the way the database has been restructed using widerows, it would not allow querying by an attribute that was not a primary key. To solve this issue,
+			some restructuring of unique and primary keys occurred along with the inclusion of indexing each row so that this data could be found. </li>
+			</ul>			
+			</p>			
+						
+						
+						
+						
+						
+			
+			
+			
+			
+			
+			
+			
+			
+			<div class="subsection-divide"></div>
             <h3>Hardware Testing</h3>
 
             <!-- Evaluation -->

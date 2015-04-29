@@ -114,14 +114,15 @@ These are:<br>
 	A second call to the CQL database is then made via the API. Given the new time stamp retrieved differs from the previous
 	reading's, an assumption is made that an update in the actual CQL database has occurred for that specific sensor id
 	associated with a bay. Whether it is occupied or not is then worked out via the sensor reading retrieved. This
-	then calls the specific Bay object's setOccupied function and the SQL parking database is updated.
+	then calls the specific Bay object's setOccupied function and the SQL parking database is updated using the Observer pattern.
 	</li>
 	</ul>
 </p>
 <p>
 At present, the majority of analytics is performed within a read-only SQL view table.
 There are two key reasons for this choice. Other than calculating whether a bay is 'occupied' (1 | 0) and the time this state change occurred, all other information of interest to be displayed on our web app is already implicitly known and can be calculated
-in a less resource heavy fashion. Views also update via lazy evaluation, 'on the spot' when called by PHP server-side code on our web app. This is better suited for our purposes in providing time sensitive information immediately such as the 'time remaining' one can remain occupied in a bay.   
+in a less resource heavy fashion. Views also update via lazy evaluation, 'on the spot' when called by PHP server-side code on our web app. This is better suited for our purposes as calculations such as 'time remaining' only occur when they are needed (the website is accessed by a user) and are not
+calculated continuously in the background. 
 </p><br>
 <p>
 The information provided within the view table includes:
@@ -131,7 +132,7 @@ The information provided within the view table includes:
 The nearest available bay <br>
 	This is worked out given the current state of a bay. If a bay is unoccupied, then it itself is its nearest
 	available bay. Consequently, given a bay is occupied, a list of all unoccupied bays within the area are found 
-	and making use of basic pythagorus, the next nearest available bay is identified.
+	and making use of the euclidean distance formula in 2D, the next nearest available bay is identified.
 </li><li>
 	Time remaining <br>
 	Given a restriction_id and that max_stay is not NULL within the restrictions table of the SQL Parking database,
