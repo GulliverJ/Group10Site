@@ -66,25 +66,14 @@
             <a class="anchor" id="progress"></a>
             <hr>
             <h4 style="font-weight: lighter"></h4>
-            <ul>
-              <li>Plans or ideas we have for expanding the prototype</li>
-              <li>Associated notes on how to go about it</li>
-              <li>Links to issues identified in 'testing and evaluation'</li>
-              <li>Maybe something about client feedback..?</li>
-            </ul>
-
-            <!-- Future Goals -->
-            <h2>Future Goals</h2>
-            <a class="anchor" id="goals"></a>
-            <hr>
-            <ul>
             <h3>Improving Sensor Management for Users</h3>
             <p>One of the things we would like to improve on is administrator control. Right now, once an administrator has signed up to the website, the only thing he is able to do is add new sensors. Features we would like to include in the future include:</p>
+            <ul>
             <li>Editing existing sensors</li>
             <li>Deleting existing sensors</li>
             <li>Editing account settings</li>
             <li>Sorting list of sensors</li>
-            <li>Alerts for when parking bays have exceeded the allowed maximum stay</li><p></p>
+            <li>Alerts for when parking bays have exceeded the allowed maximum stay</li></ul>
             <p>Some of these things are quite simple to add, but we decided to push them out of our current scope, as they are unnecessary features. 
             Right now we can manually edit sensors behind the scene and edit account settings, so they were not required to present the use of our system.</p>
             <h3>Support for TCP connections</h3>
@@ -101,17 +90,45 @@
             <p>These features are not necessary for the launch of the app, but would make the app more user friendly and practical. 
             We want to take it from simply showing you the bays to actually guiding you to them and alert you when you are close to staying for too long.</p>
             </ul>
+            <h3>Reassessing our noSQL database</h3>
+            <p>For this project to become viable in the larger scale, our cassandra database would most likely need remodelling.
+            Currently it is fully functional, but it is not as efficient as it could be. 
+            When dealing with small datasets, this is not a problem, as the difference in efficiency is not noticeable. 
+            However if we are to store thousands or millions of strings of data, accessing them all as quickly as possible starts to become important.</p>
+            <ul>
+            
+              <li>Plans or ideas we have for expanding the prototype</li>
+              <li>Associated notes on how to go about it</li>
+              <li>Links to issues identified in 'testing and evaluation'</li>
+              <li>Maybe something about client feedback..?</li>
+            </ul>
+			<h4 style="font-weight: lighter"></h4>
+            <!-- Future Goals -->
+            <h2>Future Goals</h2>
+            <hr>
+            <a class="anchor" id="goals"></a>
+            <h3>Looking into Hadoop</h3>
+            <p>Now that we have a system running that stores sensor data at a decently large scale, the next step would be to perform more complicated analytics.
+            With a large enough set of data on specific parking bays, we would be able to perform analytics through hadoop for things like what time of the day the parking bays are most occupied or least occupied.</p>
+            <h3>Native API Expansion into other popular languages</h3>
+            <p>Right now we have 2 APIs for accessing data on the database, a Java API and a RESTful API. In the future, it would be nice to create more ways to access this data depending on your preferred type of programming language. 
+            We want our developers to be able to use our data as easily as possible, so adding more way in which they can do that would definitely be a future goal. </p>
+            <h3>Migration to Cassandra for the Smart Parking application</h3>
+            <p>Currently we are storing data for the Smart Parking app on a SQL database. This works fine if all we are doing is display the data, but if we want our app to perform more complex analytics and display this analysed data, then moving to a noSQL database like Cassandra would be advised.</p>
+
+            
+            
+            
             <!-- Architectural Diagrams -->
             <h2>Get Involved</h2>
             <a class="anchor" id="getinvolved"></a>
             <hr>
-            <ul>
-              <li>Details on areas of focus (e.g. "java backend", "contiki")</li>
-              <li>Links to the repo and forum</li>
-              <li>Links to the manual</li>
-              <li>Maybe contact details...???</li>
-            </ul>
-
+            <h4 style="font-weight: lighter">We're constantly evolving and looking into how we can better ourselves. If you have skills or interest in the areas of Big Data, networking, or sensor hardware, you're well-placed to play a founding role in the early stages of this project.</h4>
+            <h3>What's up next?</h3>
+            <p>Everything detailed above in 'next steps' is our primary focus. Largely they're quite straight-forward developments, so you may be more interested in 'future goals'. These outline more clearly the larger steps we want to make from where we are now to where the project could be in a year or so. If they're the kind of thing you have experience in, read on for details on helping us out.</p>
+            <h3>How to help</h3>
+            <p>First and foremost, it's important to us that you stay in the loop. It's best to use our <a href="http://orangesensorsapis.freeforums.net/">forums</a> for this - we'll be posting regular updates and keeping you alert for any open positions on the team</p>
+            <p>If you're interested in more details on how to make a start writing code for us, or for applications using the data, have a good look at the <a href="show.html#imp">implementation details</a> or the manuals for the <a href="api.html">APIs</a>.</p>
           </div>
         </div>
       </div>

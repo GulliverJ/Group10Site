@@ -72,7 +72,7 @@
             </ul>
 
             <!-- Node.js API -->
-            <h2>Orange Sensors Web API</h2>
+            <h2>Web API</h2>
             <a class="anchor" id="webapi"></a>
             <hr>
             <ul>
@@ -81,16 +81,81 @@
             </ul>
 
             <!-- Java API -->
-            <h2>Orange Sensors Java API</h2>
+            <h2>Java API</h2>
             <a class="anchor" id="javaapi"></a>
             <hr>
-            <ul>
-              <li>All documentation and guidelines for using the Java API</li>
-              <li>Along with examples</li>
-            </ul>
-            
+            <h4 style="font-weight: lighter">The Java API offers both public and authenticated access to all sensor data. If you're a user, this means you can restrict your queries to only sensors that belong to you. Here's all you need to get going with the API, and start using the data in your applications.</h4>
+            <h3>Download</h3>
+            <p>Before you do anything, make sure you download the API <a href="https://github.com/GulliverJ/OrangeSensorsJavaAPI">here</a>. All you really need is the orange-java-api.jar, but the source code is included should you wish to experiment for yourself.</p>
+
+            <h3>Full documentation specification (JavaDoc)</h3>
+            <p>The full documentation page for each class and method can be viewed <a href="res/java-api-doc/index.html">here</a>.</p>
+            <p>Read on to see how to initialise your Java project to use the API, and find example code for best approach</p>
+
+            <h3>Getting Started</h3>
+            <p>Before you begin, you'll need to make sure you have some support for Maven installed. We're using Eclipse as a Java IDE, and downloads for Maven integration are <a href="https://maven.apache.org/eclipse-plugin.html">here</a>.</p>
+            <p>Once in Eclipse, we need to set up a simple Maven project. Press CTRL-N or right-click the Package Explorer before selecting "Other".</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_1.png">
+              <p>Create a new Maven project.</p>
+            </div>
+
+            <p>On the next screen, be sure to check 'Create a simple project'. Leave the other settings as they are, and click Next.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_2.png">
+              <p>Create a simple project.</p>
+            </div>
+
+            <p>Next, set up the basic project details. Group ID and Artifact ID are the only fields required, so add these at a minimum and then click Finish.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_3.png">
+              <p>Initialise the project details</p>
+            </div>
+
+            <p>Now we need to edit the pom.xml file to add a dependency for the Cassandra Java Driver. This is a simple process of selecting pom.xml in the Package explorer, choosing the pom.xml tab shown in the main panel, and pasting this code before the closing project tag:</p>
+            <pre>
+&ltdependencies>
+  &ltdependency>
+    &ltgroupId>com.datastax.cassandra&lt/groupId>
+    &ltartifactId>cassandra-driver-core&lt/artifactId>
+    &ltversion>2.1.4&lt/version>
+  &lt/dependency>
+&lt/dependencies&gt
+            </pre>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_4.png">
+              <p>Set the dependencies to add in the Cassandra Java Driver</p>
+            </div>
+
+            <p>Now we need to add the API to our build-path. Open the build path panel by right-clicking the project and going to Build Path -> Configure Build Path</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_5.png">
+              <p>Configure the build-path to include the API</p>
+            </div>
+
+            <p>From this page, select the 'Libraries' tab and click 'Add External Jars'. Navigate to the orange-java-api.jar file you downloaded earlier, and select it.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_6.png">
+            </div>
+
+            <p>Click 'okay' on any remaining windows, and you'll see the Jar appear in the package explorer. Now, we're ready to start writing code. All that's left is to import the API in any classes you'll need to use it in. Go ahead and create a main class and import the API. Read on to find more information on the best practice for using the API.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/javatut_7.png">
+              <p>Import the API</p>
+            </div>
+
+            <h3>Using the API</h3>
+            <p>All documentation for the API can be found <a href="res/java-api-doc/index.html">here</a>, so we'll spare the finer details of what each class contains. The important class to know about is OrangeConnection, which contains the majority of data-accessing methods.</p>
+            <p>The suggested approach to accessing the data is to first retrieve a filtered list of IDs from sensors you want to check data for. This can be done using the "getIDs*" methods, for example getIDsWhere(). Once you have this list, you can then perform operations on it for accessing any element of data, for example the latest reading.</p>
+            <p>This code demonstrates a use of the API to access and print out data for any sensors whose application is 'Orange Parking', the application used by our example Smart Parking app.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/java_api_code.jpg">
+              <p>The basics required to retrieve data from the system database.</p>
+            </div>
+
+
              <!-- Hardware -->
-            <h2>Orange Sensors Hardware</h2>
+            <h2>Hardware</h2>
             <a class="anchor" id="hardware"></a>
             <hr>
             <ul>
@@ -171,50 +236,14 @@
               <p>once you've clicked make, redirect yourself back to tools and run this code to test your ADC channels: </p>
               <pre>sudo ./mc1322x-load.pl -f /home/user/contiki-2.7/cpu/mc1322x/tests/adc_freescale-usb.bin -t /dev/ttyUSB1</pre>
               <p>click the reset button on the board (top button) and your adc readings should now be displayed. channels 1-7 should display junk, while channel 0 displays ADC 0.</p>
-              <p>Here is some example code to read the adc and send it through uart2 serial port:</p>
-              <pre>#include <mc1322x.h>
-#include <board.h>
-
-#include <stdio.h>
-#include "tests.h"
-#include "config.h"
-#include "adc.h"
-
-void main(void) {
-
-    trim_xtal();
-    uart_init(UART1, 115200);
-    uart_init(UART2, 115200);
-    adc_init();
-
-    adc_setup_chan(0);
-    
-    printf("adc test\r\n");
-
-        GPIO->PAD_PU_SEL.U2RX = 1;
-    int i;
-    while(1) {
-
-        adc_service();
-        if(adc_reading[0] > 500)
-        {
-        uart2_putc('a');
-        for(i=0; i<1000000; i++) { continue; }
-        }
-        else
-        {
-        uart2_putc('b');
-        for(i=0; i<1000000; i++) { continue; }
-        }
-    }
-    
-}</pre>
+              <p>To run the code we used for the project. Find the c file named u1u2-loopback.c loopback and save it in your Contiki tests folder. (if you used our Contiki library on the github, it will already be in there).</p>
               <p>now that you know how to upload programs, its time to start coding. You will now have to read through the libraries and learn how the header files should be used. You can use our code here to take an ADC value and send it via serial to the Arduino:</p>
               <h3>Step 3: uploading code on the Arduino</h3>
               <p>Uploading code on the Arduino is incredibly simple. Simply install the Arduino program, select your usb connected board under tools/board and you are ready to go. Here is some code we wrote to read the serial port and write it to our computer:</p>
               <pre>
+int incomingByte = 0;   // for incoming serial data
 void setup() {
-        Serial.begin(115200);     // opens serial port, sets data rate to 9600 bps
+        Serial.begin(115200);     // opens serial port, sets data rate to 115200 bps
         Serial3.begin(115200);
 }
 
@@ -223,12 +252,24 @@ void loop() {
         if (Serial3.available() > 0) {
                 // read the incoming byte:
                 incomingByte = Serial3.read();
-               Serial.println(incomingByte);
-               Serial.println(incomingByteNew);
-       
+                //Serial.println(incomingByte);
         }
+       
+        //use this code if the readings are off:
+        //Serial.print("a1b2c3d4;1:");
+        //Serial.print(150 - (incomingByte - 133) * 2 );
+        //Serial.println(";");
+        
+        Serial.print("a1b2c3d4;1:");
+        Serial.print(150 - (incomingByte - 97)*8 );
+        Serial.println(";");
+        
 }</pre>
-              <p>We used this to send data to our computer which then handled the UDP section.</p>
+              <p>We used this to send data to our computer which then handled the UDP section. As you can see we are printing a1b2c3d4; which is our identifier, followed by a 1: followed by what the sensor is reading followd by a ;. This is the format the authentication server expects and will reject it if you dont follow the format.</p>
+              <pre>identifier;sensorID:sensorReading;</pre>
+              <h3>Step 4: Sending the data with UDP</h3>
+              <p>To handle UDP communications, we wrote a simple java program that reads the message from the Arduino port and sends it off every 5 seconds. You can find this code on the Github. Make it into a java project in eclipse. </p>
+              <p>If the console prints the data and then prints sent, you know that the code is working and that it is updating to the server. This will then within 15-30 seconds update the specified sensor on the website.</p>
             </ul>
 
           </div>
