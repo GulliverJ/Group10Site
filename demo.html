@@ -53,6 +53,7 @@
                   <li style="background-color: #1b1b1b; padding-top: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; border: 1px #eee solid"><span style="padding: 16px; color: #fff">Navigation</span><p></li>
                   <li><a href="#final">Final Product</a></li>
                   <li><a href="#design">Design</a></li>
+                  <li><a href="#hardware">Hardware</a></li>
                   <li><a href="#javaapi">Using the Java API for analytics</a></li>
                   <li><a href="#analytics">Running analytics</a></li>
                   <li><a href="#simulator">Simulating Sensors</a></li>
@@ -84,7 +85,51 @@
               <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/icons_legend.png">
               <p>The custom icons used in our application to indicate the state of a given parking bay.</p>
             </div>
-            
+           
+            <!-- Hardware -->
+            <h2>Hardware</h2>
+            <a class="anchor" id="hardware"></a>
+            <hr>
+            <ul>
+               <h3>The MC1322x micro-controller</h3>
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/MC1322.jpg">
+              <p>For our project we decided to go with a MC1322x micro-controller. This controller was developed by Freescale as a tool for handling small scale ZigBee communications and sensor control. </p>
+              <p>The reason for choosing this specific controller was because early research showed that it was compatible with Contiki, which we were planning to use. 
+              Our professor Graeme McPhillips created a board around the controller to allow us to access the different ports more easily. The board is shown below:</p>
+              <p><img class="img-rounded" src="img/Stampback.png"> <img class="img-rounded" src="img/Stampfront.png"></p>
+              <p>For full documentation on the mc1322x refer to the <a href="img/MC1322x.pdf" >documentation pdf</a></p>
+              <p>For full documentation on the Stamp board refer to the <a href="img/stamp.pdf" >documentation pdf</a></p>
+              <h3>Contiki</h3>
+              <p>Contiki is the software we used to control the micro-controller. 
+              The basic idea of Contiki is to provide a set of libraries to take care of low level control of the microcontroller. 
+              It skips the step of configuring every input and output of the device so that we are left with easy to use functions for operating ADC inputs and ZigBee.</p>
+              <p>For full documentation on Contiki, refer to their website: http://www.contiki-os.org/</p>
+              <h3>Infra-Red</h3>
+              <p>For our project we went with infra-red to determine the state of our parking bay. 
+              Infra-Red allows for a low cost, easy to implement way of determining the state of a car simply by reading a distance measurement.</p>
+              <p>The below sensor is the one we used for our project. It is called the Sharp 2Y0A02 Distance Sensor:</p>
+              <p><img class="img-rounded"src="img/IR.JPG" > <img class="img-rounded" src="img/IRpin.JPG"></p>
+              <p>For full documentation on the device refer to the <a href="img/sharp_gp2y0a02.pdf" >documentation pdf</a></p>
+              <p>Control of this device is done via Contiki and the micro-controller, which is shown in our tutorial section.</p>
+              <h3>ZigBee</h3>
+              <p>For our project we went with ZigBee to handle communications between the different sensor units. 
+              It does not handle communication with the Arduino, as that is done with a simple serial connection. </p>
+              <p>We went with ZigBee, because it is designed for low power use cases like ours and the Contiki library allowed for easy implementation of this.</p>
+              <p>It is the ideal communication protocol for this kind of project, as the range is well within what would be required for parking applications. 
+              For use cases unrelated to parking and where distances exceed ~100m per sensor, using other communication devices is recommended. </p>
+              <p>For our project we went with ZigBee to handle communications between the different sensor units. 
+              It does not handle communication with the Arduino, as that is done with a simple serial connection. </p>
+              <p>For full documentation on ZigBee, refer to the <a href="img/ZigBee.pdf" >documentation pdf</a></p>
+              <h3>Arduino</h3>
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/ArduinoLogo.png" >
+              <p>We used the Arduino in our system to act as our zone controller. 
+              For the sake of demonstration, we had to handle global communication via a computer due to the service being down for the shield we were planning to use.
+              We used the Arduino Mega along with a Arduino GSM shield:</p>
+              <p><img class="img-rounded"src="img/GSMShieldFront.jpg" > <img class="img-rounded" src="img/GSMShieldBack.JPG"></p>
+              <p>In a real life implementation of this project, it is recommended to use something smaller than the Arduino, as it draws unnecessary amounts of power.
+              The best thing to do would be to attach a GSM shield directly to your sensor unit, instead of using the Arduino as a medium. For the sake of simplicity we chose to use Arduino.</p>
+              <p>For more information on Arduino, refer to their website: <a href="http://www.arduino.cc">www.arduino.cc</a></p>
+            </ul>
             <!-- Java API -->
             <h2>Using the Java API for analytics</h2>
             <a class="anchor" id="javaapi"></a>

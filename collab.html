@@ -77,21 +77,41 @@
             <h2>Future Goals</h2>
             <a class="anchor" id="goals"></a>
             <hr>
+            
+            <h3>Improving Sensor Management for Users</h3>
+            <p>One of the things we would like to improve on is administrator control. Right now, once an administrator has signed up to the website, the only thing he is able to do is add new sensors. Features we would like to include in the future include:</p>
             <ul>
-              <li>A more formal list of features we'd like to include in future</li>
-              <li>Maybe again with notes about how to go about it</li>
+            <li>Editing existing sensors</li>
+            <li>Deleting existing sensors</li>
+            <li>Editing account settings</li>
+            <li>Sorting list of sensors</li>
+            <li>Alerts for when parking bays have exceeded the allowed maximum stay</li></ul>
+            <p>Some of these things are quite simple to add, but we decided to push them out of our current scope, as they are unnecessary features. 
+            Right now we can manually edit sensors behind the scene and edit account settings, so they were not required to present the use of our system.</p>
+            <h3>Support for TCP connections</h3>
+            <p>Right now, our system only accepts UDP connections. We chose UDP, because it was simpler to implement with our chosen hardware, but TCP has some advantages over UDP. 
+            Although the rate at which data can be received is lower for TCP, the chance the data will get there is far higher. 
+            It is in-fact pretty much guaranteed. If you refer to our testing section on UDP, if we send 1000 packets per second, we lose about 5%. 
+            In a small scale system like ours, this is not something to worry about, but on an industrial scale, it can be very worrying.</p>
+            <h3>Usability Improvements for the Smart Parking Application</h3>
+            <p>Right now, the smart parking app is already very usable. It will show you on the map exactly where and when parking bays are available. It will even tell you what the nearest available one is.
+            Although there is of0course always room for improvement. Here is a list of future goals for the app:</p>
+            <li>The ability to guide you with GPS to your nearest available parking lot</li>
+            <li>The ability to search for specific streets or locations</li>
+            <li>Alerts for drivers currently parked in specific parking bays.</li><p></p>
+            <p>These features are not necessary for the launch of the app, but would make the app more user friendly and practical. 
+            We want to take it from simply showing you the bays to actually guiding you to them and alert you when you are close to staying for too long.</p>
             </ul>
             <!-- Architectural Diagrams -->
             <h2>Get Involved</h2>
             <a class="anchor" id="getinvolved"></a>
             <hr>
-            <ul>
-              <li>Details on areas of focus (e.g. "java backend", "contiki")</li>
-              <li>Links to the repo and forum</li>
-              <li>Links to the manual</li>
-              <li>Maybe contact details...???</li>
-            </ul>
-
+            <h4 style="font-weight: lighter">We're constantly evolving and looking into how we can better ourselves. If you have skills or interest in the areas of Big Data, networking, or sensor hardware, you're well-placed to play a founding role in the early stages of this project.</h4>
+            <h3>What's up next?</h3>
+            <p>Everything detailed above in 'next steps' is our primary focus. Largely they're quite straight-forward developments, so you may be more interested in 'future goals'. These outline more clearly the larger steps we want to make from where we are now to where the project could be in a year or so. If they're the kind of thing you have experience in, read on for details on helping us out.</p>
+            <h3>How to help</h3>
+            <p>First and foremost, it's important to us that you stay in the loop. It's best to use our <a href="http://orangesensorsapis.freeforums.net/">forums</a> for this - we'll be posting regular updates and keeping you alert for any open positions on the team</p>
+            <p>If you're interested in more details on how to make a start writing code for us, or for applications using the data, have a good look at the <a href="show.html#imp">implementation details</a> or the manuals for the <a href="api.html">APIs</a>.</p>
           </div>
         </div>
       </div>
