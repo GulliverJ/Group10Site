@@ -72,47 +72,54 @@
             <h2 style="margin-top: 12px">Requirements and Goals</h2>
             <a class="anchor" id="req"></a>
             <hr>
-            <h3>Here's a subsection header</h3>
-            <p>And a short sample of regular body text.</p>
-            <h4>And a sub-sub-section header</h4>
-            <ul class="bodylist">
-              <li>This is a list item</li>
-              <li>But wait- a second list item!</li>
-              <li>Third item</li>
-            </ul>
-            <pre>
-// Here's some ugly code (need to get a syntax highlighter at a later date)
-public static void main(String[] args)
-{
-  System.out.println("Hello World!");
-}
-            </pre>
+            <h3>A Brief Introduction</h3>
+			<p> 
+				For our final proof of concept in term two, identifying the key, finalised requirements involved a series of steps. 
+				Just before the start of the second term, the team gathered in order to pool together ideas and research carried out in term one.
+				From this, we produced two documents which were subsequently sent to our client(s) at Orange Labs. A meeting at their office to go over these
+				and our prototype from term one involving the use of Bluetooth to connect sensor hardware to computer, a MySQL Azure database and Analytics in 
+				JAVA was then scheduled for 20th January. 
+			</p>
+			<p>
+				The two aforementioned draft documents can be downloaded below:
+				<ul>
+				<li><a href="https://www.dropbox.com/s/o4dgxoqszy7m2ke/proposal_draft.pdf?dl=1">Project Proposal</a></li>
+				<li><a href="https://www.dropbox.com/s/7cs0uoqsto5y3me/proposed_deliverables.pdf?dl=1">Timeline of Deliverables</a></li>
+				</ul>
+				<p>
+				From these two documents and the feedback received from our client(s) during the meeting on 20th January which can be downloaded <a href="https://www.dropbox.com/s/0ykehuqdz6bmok5/%2820thJAN%29MEETING%20WITH%20CLIENT%20IIII.docx?dl=1">here</a>, 
+				final requirements and project goals were derived. 
+				</p>
+				
+				<h4>General requirements and goals we aim to meet for this project include: </h4>
+				<p><em>Note: A more detailed list can be found under Specification below.</p></em>
+				
+				
             <table>
               <tr class="head">
-                <th style="width: 30%">I'm a header</th>
-                <th style="width: 70%">I'm a wider header</th>
+                <th style="width: 30%">ID</th>
+                <th style="width: 70%">Requirement</th>
               </tr>
-              <tr>
-                <td>Wow, such row</td>
-                <td>Many subdivide</td>
-              </tr>
-              <tr>
-                <td>Very grid</td>
-                <td>wow</td>
-              </tr>
+              <tr><td>1</td><td>The system must have a plug & play architecture in order to enable swift and flexible adding of new sensor hardware to the network</td></tr>
+              <tr><td>2</td><td>The system must have a scalable infrastructure given the vast and growing amount of data it will be required to support long-term</td></tr>
+			  <tr><td>3</td><td>The system, through its platform, must enable the meshing of sensor data and support a variety of different types of sensor data</td></tr>
+              <tr><td>4</td><td>There must be a set of APIs through which the database(s) can be accessed</td></tr>
+			  <tr><td>5</td><td>Sensor data from the system should be made publicly available and be easy-to-use</td></tr>
+              <tr><td>6</td><td>All sensor data should also be presented in a uniform, standardised and clear format</td></tr>
+			  <tr><td>7</td><td>There must be two different Web-based applications 'GUIs', the first being a sensor management portal and
+				the second being an smart parking app </td></tr>
+              <tr><td>8</td><td>Basic analytics must be carried out for the smart parking application</td></tr>
+			  <tr><td>9</td><td>Accuracy of hardware in vehicle detection should be prioritised over low costs</td></tr>
+              <tr><td>10</td><td>The hardware must include a central module "zone controller" and sensor unit(s)</td></tr>
+			  <tr><td>11</td><td>The system must have a degree of authentication present in order to prevent abuse </td></tr>
             </table>
-            <div class="imgborder">
-              <img class="img-responsive img-rounded" src="img/cat.jpg">
-              <p>A photo of a cat named Claude. This is basically just an image caption</p>
-            </div>
-
+	
             <!-- Sepcification and Design -->
             <h2>Specification and Design</h2>
             <a class="anchor" id="spec"></a>
             <hr>
             <h3>Functional Specification</h3>
-            <ul>
-              <li>These will be a list of requirements that we ourselves have defined as "our scope"</li>
+            <h4>Provided below is a more in-depth look into the scope of our project divided by category:</h4>
               <li>E.g. a section in the specification for the System website: "Users should be able to indicate sensor position on an interactive Google map"</li>
             </ul>
             
@@ -574,26 +581,15 @@ public static void main(String[] args)
 			
 			<p>These include:
 			<ul>
-			<li>It was not safe to include any user details such as operator_id within the cassandra database if kept within the same table as meta data on individual sensors.<br>
+			<li>It was not safe to include any user details such as operator_id within the Cassandra database if kept within the same table as meta data on individual sensors.<br>
 			  More generally, given the code is open source and the potential to add onto the current REST API code exists, including said data would not be secure at all.</li>
 			<li>Complex boolean operations and also the AND operator is not always applicable for querying. As a substitute, the IN keyword has been used instead.</li>
 			<li>Due to the way strings are handled as byte arrays, querying with CQL is case sensitive.</li>
-			<li>Due to the way the database has been restructed using widerows, it would not allow querying by an attribute that was not a primary key. To solve this issue,
+			<li>Due to the way the database has been restructured using widerows, it would not allow querying by an attribute that was not a primary key. To solve this issue,
 			some restructuring of unique and primary keys occurred along with the inclusion of indexing each row so that this data could be found. </li>
 			</ul>			
 			</p>			
-						
-						
-						
-						
-						
-			
-			
-			
-			
-			
-			
-			
+
 			
 			<div class="subsection-divide"></div>
             <h3>Hardware Testing</h3>
