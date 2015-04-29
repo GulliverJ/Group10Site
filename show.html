@@ -36,7 +36,7 @@
     <div class="pageheader">
       <div class="container">
         <div class="embed-responsive embed-responsive-16by9 video">
-          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gvdf5n-zI14?rel=0&showinfo=0&controls=0" frameborder="0"></iframe>
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/I_Dkeb1bAdI?rel=0&showinfo=0&controls=0" frameborder="0"></iframe>
         </div>
         <div>
           <h1 style="color: #f60">Project Showcase</h1>
@@ -97,8 +97,8 @@
 				
             <table>
               <tr class="head">
-                <th style="width: 30%">ID</th>
-                <th style="width: 70%">Requirement</th>
+                <th style="width: 10%">ID</th>
+                <th style="width: 90%">Requirement</th>
               </tr>
               <tr><td>1</td><td>The system must have a plug & play architecture in order to enable swift and flexible adding of new sensor hardware to the network</td></tr>
               <tr><td>2</td><td>The system must have a scalable infrastructure given the vast and growing amount of data it will be required to support long-term</td></tr>
@@ -127,8 +127,8 @@
 			 <table>
               <tr class="head">
                 <th style="width: 10%">ID</th>
-				<th style="width: 30%">Category</th>
-                <th style="width: 60%">Requirement</th>
+				<th style="width: 25%">Category</th>
+                <th style="width: 65%">Requirement</th>
               </tr>
               <tr><td>1</td><td> System Website </td><td> Users should be able to indicate sensor position on an interactive Google map</td></tr>
 			  <tr><td>2</td><td> System Website </td><td> Users must be able to add new sensors to the network via this platform easily</td></tr>
@@ -157,23 +157,10 @@
 			  
 			  
 		   </table>
-			
-			
-			
-			
-			
-			
-			
-			
-			
-              <li>E.g. a section in the specification for the System website: "Users should be able to indicate sensor position on an interactive Google map"</li>
-            </ul>
-            
+         
             <div class="subsection-divide"></div>
             <h3>High-level System Design</h3>
-            <ul>
-              <li>Talking at high-level about how we've designed the system, and whether or not it has the potential to satisfy requirements/why it has the potential to satisfy the requirements</li>
-            </ul>
+            <p>As an overview, this graphic illustrates the high-level interpretation of our system design. The sensors in the environment will send their data as UDP packets to the main server. The main server has a web front-end, and handles processing and storing the data. Two APIs can then be used to access the data, allowing developers to apply it to external applications.</p>
             <div class="imgborder">
               <img class="img-responsive img-rounded" src="img/overview.png">
               <p>A high-level overview of the system design as a whole.</p>
@@ -646,8 +633,10 @@
 			<p>In a test, we send 100 readings in 1 second. Already, this would be far more than we would ever need. At most, 1 zone controller would not have more than 10 sensors anyways. Since we put a delay of around 15 seconds on how often data can be send from each node, the zone controller would at most only ever receive 1 reading from each node a second.</p>
 			<h5>Serial ports load test</h5>
 			<p>For our hardware, we used serial ports in 2 instances: </p>
-			<li>To send data from our stamp to our Arduino. </li>
-			<li>To send data from our Arduino to our Computer </li>
+      <ul>
+			 <li>To send data from our stamp to our Arduino. </li>
+			 <li>To send data from our Arduino to our Computer </li>
+      </ul>
 			<p>In both instances, we were able to send at a baud rate of 115200. This is again far higher than we would ever need, meaning we were able to send data reliably.</p>
 			<p>One thing we did find was that when communicating between our computer and the Arduino, the data would sometimes duplicate itself in the first or second reading. To get around this, we simply ignore those initial readings, as this only occurs on startup.</p>
 			<h4>Sensor Accuracy</h4>
