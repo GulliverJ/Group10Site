@@ -75,10 +75,106 @@
             <h2>Web API</h2>
             <a class="anchor" id="webapi"></a>
             <hr>
-            <ul>
-              <li>All documentation and guidelines for using the Node.js API</li>
-              <li>Along with examples, if possible</li>
-            </ul>
+			<h4 style="font-weight: lighter">
+				Built using Node.js and the web application framework Express.js, the REST API supports a generalised range of methods
+				publicly accessible by both registered and unregistered users. </h4>
+			<p>	
+				This was produced for the purposes of catering to a wider audience and providing an easy way for developers to integrate sensor data within their own applications via
+				the HTTP protocol. Data is returned in JSON objects of which can then be used in web based applications or decoded and manipulated through the multiple libraries ready available in a variety of languages. 
+			</p>
+			<h3>Download and Documentation</h3>
+
+			<p>The REST API can be downloaded <a href="https://github.com/vnjk/OrangeSensorsRESTapi">here</a>. Additional Documentation regarding the usage of the API and the methods it contains can be found in 
+				the same repository under '<a href="https://github.com/vnjk/OrangeSensorsRESTapi/blob/master/README.md">README.md</a>'. 
+			</p>	 
+				
+			<h3>Example of usage </h3>
+
+			<p>	At present, code for this API is currently hosted live at orange-peel.herokuapp.com/sensors. Usage of this API can be found on our sensor
+				management portal. When logged in and viewing the management page, Jquery is used to make a call to the API for the latest reading of a 
+				specific sensor id and the associated time stamp. This is then integrated within the PHP code and displayed in the table as seen below. 
+			</p>	 
+
+			 <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/portalhighlightreadings.png">
+              <p>Reading and Timestamp of a particular sensor set to be updated every 10 seconds dynamically via Ajax.</p>
+			 </div>
+				 
+			 <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/jqueryandapiinaction.png">
+              <p>Caption: Example Jquery code where call is made.</p>
+			 </div> 
+
+			<h3> Further Notes: Getting Started </h3>
+			<p>	To set up the current code in order to integrate or build upon it to include within your own node.js web application, 
+				the following steps are recommended:
+			</p>
+			<p> <ul>
+			<li><a href="https://nodejs.org/download/">Download Node.js</a>  </li> 
+			
+			<li><a href="http://expressjs.com/starter/installing.html">Download Express.js</a>  </li> 
+
+			<br>
+			<li>	Download package.json dependencies:
+				Navigate to the directory you downloaded the api to and via command line, type: <em>npm install</em> </li> 
+			</ul>
+				The project routes can now be edited to generate and display information on .html pages by installing and making use of 
+				a templating engine such as: 
+			<ul>
+			<li><a href="http://handlebarsjs.com/">Handlebars</a>  </li> 
+			<li><a href="http://www.embeddedjs.com/">Ejs      </a>  </li> 
+			</ul>
+
+			<h3>	Hosting Locally </h3>
+			
+			<p>	Upon installation of all necessary node modules (See: 'Further Notes: Getting Started') </p>
+
+			<p>	The API can be run and hosted locally on a Virtual Machine for instance. </p>
+			<p>	This can be done by setting a port number. At present, this has been set to a default value of 1995 in app.js. </p>
+
+			<p>	In command line, calling node <api_name.js> will then start up the API running on localhost:<port_number>. </p>
+
+			 <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto" src="img/startingnodeserver.png">
+              <p>Running the node api locally</p>
+			 </div> 
+
+			<h3>	Hosting on Heroku </h3>
+			<p>	As previously mentioned, this API is currently running live on Heroku and can be accessed by making a jquery call using one of the 
+			<a href="https://github.com/vnjk/OrangeSensorsRESTapi/blob/master/README.md">documented methods</a> 
+			A general overview of how this was set up is described below: </p>
+
+			<p><ul><li><a href="https://www.heroku.com/home">Sign Up for Heroku </a></li></ul> </p>
+
+			<p>	Carry out the following commands in terminal in order (Windows):
+			<ul> 
+				<li>General set up</li>
+				<ul>
+				<li>heroku login</li>
+				<li>heroku git:clone -a <folder_name></li>
+				<li>cd <folder_name></li>
+				<li>git init</li>
+				<li>Drag all necessary files into folder_name</li>
+				</ul>
+				
+				<li>Installing modules</li>
+				<ul>
+				<li>npm install cassandra-driver</li>
+				<li>npm install cassandra-driver --save</li>
+			<li>	npm install -g foreman</li>
+			<li>	nf start</li>
+				</ul>
+				<li>Committing to Git Hub</li>
+				<ul>
+				<li>git add .</li>
+			<li>	git commit -m 'insert message here'</li>
+			<li>	git push heroku master</li>
+				<li>heroku ps:scale web = 1</li>
+				<li>heroku open</li>
+				</ul>
+			</ul>
+			</p>
+			
 
             <!-- Java API -->
             <h2>Java API</h2>
