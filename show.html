@@ -104,7 +104,7 @@
               <tr><td>2</td><td>The system must have a scalable infrastructure given the vast and growing amount of data it will be required to support long-term</td></tr>
 			  <tr><td>3</td><td>The system, through its platform, must enable the meshing of sensor data and support a variety of different types of sensor data</td></tr>
               <tr><td>4</td><td>There must be a set of APIs through which the database(s) can be accessed</td></tr>
-			  <tr><td>5</td><td>Sensor data from the system should be made publicly available and be easy-to-use</td></tr>
+			  <tr><td>5</td><td>Sensor data from the system should be made publicly available and be easy-to-aggregate together</td></tr>
               <tr><td>6</td><td>All sensor data should also be presented in a uniform, standardised and clear format</td></tr>
 			  <tr><td>7</td><td>There must be two different Web-based applications 'GUIs', the first being a sensor management portal and
 				the second being an smart parking app </td></tr>
@@ -119,7 +119,51 @@
             <a class="anchor" id="spec"></a>
             <hr>
             <h3>Functional Specification</h3>
-            <h4>Provided below is a more in-depth look into the scope of our project divided by category:</h4>
+            <p>Provided below is a more in-depth look into the scope of our project divided by category:</p>
+			
+			
+			
+			
+			 <table>
+              <tr class="head">
+                <th style="width: 10%">ID</th>
+				<th style="width: 30%">Category</th>
+                <th style="width: 60%">Requirement</th>
+              </tr>
+              <tr><td>1</td><td> System Website </td><td> Users should be able to indicate sensor position on an interactive Google map</td></tr>
+			  <tr><td>2</td><td> System Website </td><td> Users must be able to add new sensors to the network via this platform easily</td></tr>
+			  <tr><td>3</td><td> System Website </td><td> The adding of new sensors should be a swift and easy-to-complete process</td></tr>
+			  <tr><td>4</td><td> System Website </td><td> Some degree of authentication must be required for security purposes when adding new sensor hardware to the network</td></tr>
+			  <tr><td>5</td><td> System Website </td><td> The platform should be responsive designed, owing to users on the move in the environment to set up sensors</td></tr>
+			  <tr><td>6</td><td> System Website </td><td> The platform should notify users when their sensors have potentially broken down i.e. via the lack of an update over a set interval of time</td></tr>
+			  <tr><td>7</td><td> System Website </td><td> The platform should be easy to navigate, there must be clarity in content present</td></tr>
+			  <tr><td>8</td><td> System Website </td><td> Users should be able to easily manage their own set of sensors on the portal page</td></tr>
+			  <tr><td>9</td><td> System Website </td><td> The design of the websites' pages must not affect its overall usability negatively</td></tr>
+			  <tr><td>10</td><td> System Website </td><td> Users must be able to sign up to the platform</td></tr>
+			  
+			  <tr><td>11</td><td> Usecase Hardware </td><td> For the use case of illegal parking, must be able to accurately tell if a bay is occupied or not</td></tr>
+			  <tr><td>12</td><td> Usecase Hardware </td><td> While accuracy should be prioritised, hardware should ideally be low-powered</td></tr>
+			  
+			  <tr><td>13</td><td> Parking Application </td><td>Must have a graphical overlay in order to communicate information like bay occupancy visually to users</td></tr>
+			  <tr><td>14</td><td> Parking Application </td><td> Should be able to tell whether a bay has been illegally occupied</td></tr>
+			  <tr><td>15</td><td> Parking Application </td><td> Should include additional parking data for instance time restrictions placed upon bays</td></tr>
+			  <tr><td>16</td><td> Parking Application </td><td> Should automatically update a bay's occupancy along with its associated information</td></tr>
+			  <tr><td>17</td><td> Parking Application </td><td> All and any features should be easily noticeable</td></tr>
+			  
+			  <tr><td>18</td><td> Analytics </td><td> Basic analytics must calculate bay occupancy</td></tr>
+			  <tr><td>19</td><td> Analytics </td><td> Whether a bay is legally or illegally occupied must also be calculated</td></tr>
+			  
+			  
+		   </table>
+			
+			
+			
+			
+			
+			
+			
+			
+			
               <li>E.g. a section in the specification for the System website: "Users should be able to indicate sensor position on an interactive Google map"</li>
             </ul>
             
