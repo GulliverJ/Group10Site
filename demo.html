@@ -36,8 +36,8 @@
     <div class="pageheader">
       <div class="container">
         <div>
-          <h1 style="color: #f60">Demonstration</h1>
-          <p class="pageblurb">Some appropriate graphics and text saying something to the effect of "See our system in action through our Smart Parking app"</p><br>
+          <h1 style="color: #f60; font-size: 70px; padding-top: 48px">Demonstration</h1>
+          <p class="pageblurb">See our system in action through our Smart Parking app</p><br>
         </div>
       </div>
     </div>
@@ -76,11 +76,21 @@
             <h2>Design</h2>
             <a class="anchor" id="design"></a>
             <hr>
-            <ul>
-              <li>A high-level diagram of the backend design</li>
-              <li>Will include talking about the databases</li>
-              <li>Brief description of how to achieve it</li>
-            </ul>
+            <p>The parking app was to have a straight-forward UI with a focus on the map element. The use of the Google Maps JavaScript API was identified very early on, with the clients specifying that they'd like to be able to see coloured icons indicating the state of parking bays. For the purposes of demonstration, we also opted to show additional data for each parking bay in a static panel on the left-hand side of the screen, as can be seen here.</p>
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/parkingapp.png">
+              <p>The final front-end design of the Smart Parking app.</p>
+            </div>
+
+            <p>Ideally in a future iteration, we'd like to have this information panel cut down and shown in a neater infoWindow instead. It's important to note here, too, that we've used AJAX calls using the JQuery library to efficiently and automatically update the bays in real-time. This means that, at most, there will be a gap of 3 seconds between a reading being added to the database and the icon changing to reflect that. Here's a brief extract of the code we used for updating each bay with the appropriate icon.</p>
+
+            <div class="imgborder">
+              <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/js_updates.png">
+              <p>Javascript code for updating the bay icons.</p>
+            </div>
+
+            <p>We also used custom-designed icons for indicating the bays as indicated by this legend.</p>
+
             <div class="imgborder">
               <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/icons_legend.png">
               <p>The custom icons used in our application to indicate the state of a given parking bay.</p>
@@ -90,8 +100,7 @@
             <h2>Hardware</h2>
             <a class="anchor" id="hardware"></a>
             <hr>
-            <ul>
-               <h3>The MC1322x micro-controller</h3>
+            <h3>The MC1322x micro-controller</h3>
               <img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/MC1322.jpg">
               <p>For our project we decided to go with a MC1322x micro-controller. This controller was developed by Freescale as a tool for handling small scale ZigBee communications and sensor control. </p>
               <p>The reason for choosing this specific controller was because early research showed that it was compatible with Contiki, which we were planning to use. 
@@ -148,22 +157,11 @@
 			separate SQL database hosting parking information. Two tables within the parking database are then used to create 
 			an SQL view where additional time-based analytics is carried out. Finally, this information is displayed on the front end parking app
 			by making use of a mixture of javascript and PHP.</p>
-			
-			
-			
-			
-			
-			
+
 			 <div class="imgborder">
              <img class="img-responsive img-rounded" src="img/.....">
              <p>Class diagram of main classes involved in Analytics</p>
 			 </div>
-			  
-			  
-			  
-			  
-			  
-			  
 			  
 			<p>
 			There are three primary Java classes involved in carrying out the back end analytics for the smart parking app.
@@ -241,11 +239,13 @@
             <h2>Simulating Sensors</h2>
             <a class="anchor" id="simulator"></a>
             <hr>
-            <ul>
-              <li>Details about the sensor simulator</li>
-              <li>Code samples</li>
-              <li>Download link for sample simulator code</li>
-            </ul>
+            <p>In order to test our system, and since we didn't have the hardware capabilities available to us, we produced a sensor simulator. This had a simple design, whereby a sensor would be represented by a single thread operating separately from the others. Each thread would wait for a normally-distributed amount of time, with a mean of 20 minutes and a standard deviation of 10 minutes. If it was then changing state to occupied, it'd send a random value between 20 and 30cm. Otherwise, it would send a value between 70 and 90cm. We used this to run 10 sensors over many days in order to test the longevity of the system - everything worked without any issue. It's important also to note that these were sending data in exactly the same way the hardware would - as a UDP packet in the same format.</p>
+            <p>The code for the simulator threads can be seen below</p>
+
+            <div class="imgborder">
+             <img class="img-responsive img-rounded" src="img/simulatorcode.png">
+             <p>The main bulk of the code running the sensor simulator thread.</p>
+             </div>
 
           </div>
         </div>
