@@ -140,18 +140,20 @@
 			  <tr><td>8</td><td> System Website </td><td> Users should be able to easily manage their own set of sensors on the portal page</td></tr>
 			  <tr><td>9</td><td> System Website </td><td> The design of the websites' pages must not affect its overall usability negatively</td></tr>
 			  <tr><td>10</td><td> System Website </td><td> Users must be able to sign up to the platform</td></tr>
-			  
-			  <tr><td>11</td><td> Usecase Hardware </td><td> For the use case of illegal parking, must be able to accurately tell if a bay is occupied or not</td></tr>
-			  <tr><td>12</td><td> Usecase Hardware </td><td> While accuracy should be prioritised, hardware should ideally be low-powered</td></tr>
-			  
-			  <tr><td>13</td><td> Parking Application </td><td>Must have a graphical overlay in order to communicate information like bay occupancy visually to users</td></tr>
-			  <tr><td>14</td><td> Parking Application </td><td> Should be able to tell whether a bay has been illegally occupied</td></tr>
-			  <tr><td>15</td><td> Parking Application </td><td> Should include additional parking data for instance time restrictions placed upon bays</td></tr>
-			  <tr><td>16</td><td> Parking Application </td><td> Should automatically update a bay's occupancy along with its associated information</td></tr>
-			  <tr><td>17</td><td> Parking Application </td><td> All and any features should be easily noticeable</td></tr>
-			  
-			  <tr><td>18</td><td> Analytics </td><td> Basic analytics must calculate bay occupancy</td></tr>
-			  <tr><td>19</td><td> Analytics </td><td> Whether a bay is legally or illegally occupied must also be calculated</td></tr>
+			  <tr><td>11</td><td> Usecase Hardware </td><td> Must be able to transmit data wirelessly via UDP.</td></tr>
+			  <tr><td>12</td><td> Usecase Hardware </td><td> For the use case of illegal parking, must be able to accurately tell if a bay is occupied or not</td></tr>
+			  <tr><td>13</td><td> Usecase Hardware </td><td> While accuracy should be prioritised, hardware should ideally be low-powered</td></tr>
+			  <tr><td>14</td><td> Usecase Hardware </td><td> Hardware should be low fixed cost and low maintenance cost</td></tr>
+			  <tr><td>15</td><td> Usecase Hardware </td><td> Code should allow for easy modification of sensor identifier.</td></tr>
+			  <tr><td>16</td><td> Usecase Hardware </td><td> Hardware should allow for easy reconfiguration as sensors are moved around.</td></tr>
+			  <tr><td>17</td><td> Usecase Hardware </td><td> Hardware should be robust so that physical maintenance is kept at a minimum.</td></tr>
+			  <tr><td>18</td><td> Parking Application </td><td>Must have a graphical overlay in order to communicate information like bay occupancy visually to users</td></tr>
+			  <tr><td>19</td><td> Parking Application </td><td> Should be able to tell whether a bay has been illegally occupied</td></tr>
+			  <tr><td>20</td><td> Parking Application </td><td> Should include additional parking data for instance time restrictions placed upon bays</td></tr>
+			  <tr><td>21</td><td> Parking Application </td><td> Should automatically update a bay's occupancy along with its associated information</td></tr>
+			  <tr><td>22</td><td> Parking Application </td><td> All and any features should be easily noticeable</td></tr>
+			  <tr><td>23</td><td> Analytics </td><td> Basic analytics must calculate bay occupancy</td></tr>
+			  <tr><td>24</td><td> Analytics </td><td> Whether a bay is legally or illegally occupied must also be calculated</td></tr>
 			  
 			  
 		   </table>
@@ -716,11 +718,13 @@
             <p>This has been achieved in multiple ways. </p>
             <p>One of the ways we ensured that our system would be scalable was to switch from a SQL to a noSQL database. An SQL database would have worked just fine for our proof of concept, but if we wanted to ensure that large scale analytics would be possible, we had to use a noSQL database.</p>
             <p>Another way we ensured that our project is scalable is by adding the ability to add sensors of different types. The system itself can store any kinds of data, although the parking app will only use data that is read as a distance and in centimeters. This allows future applications for things like weather apps to use our system to store and access their data.</p>
-            <p>The hardware itself is also
             <h4>A mesh of data</h4>
-            <p>Yep, check out sick databases</p>
+            <p>We have multiple databases, which together form our mesh of data. Our SQL database stores all the user data such as location,sensor id, measurement type, etc. This database along with our noSQL database provide a large and descriptive set of data. Our APIs allow for easy access to this data.</p>
             <h4>Full public accessibility</h4>
-            <p>We've made it as easy as we could have, yo</p>
+            <p>We have made this system as easy to use as possible. If the public wishes to add data to our database they simply have to register online and we will do the back end for them. 
+            If they wish to use the data in our database they can also use our APIs which have large libraries of functions for accessing the data. 
+            The project was designed to be open source and is therefore purposely made as easy to use as possible. 
+            This does mean all the data has been made public, however if Orange Labs were to launch this, they have told us that they would release it as an open platform.</p>
 
             <div class="subsection-divide"></div>
 
