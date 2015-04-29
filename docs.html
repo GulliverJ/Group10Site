@@ -36,8 +36,8 @@
     <div class="pageheader">
       <div class="container">
         <div>
-          <h1 style="color: #f60">Documentation</h1>
-          <p class="pageblurb">Some appropriate graphics and text saying something to the effect of "Documentation and examples for use of both the system and the APIs"</p><br>
+          <h1 style="color: #f60; font-size: 70px; padding-top: 48px">Documentation</h1>
+          <p class="pageblurb">Documentation and examples for use of both the system and the APIs</p><br>
         </div>
       </div>
     </div>
@@ -66,10 +66,10 @@
             <h2 style="margin-top: 12px">Building the Orange Sensors Network</h2>
             <a class="anchor" id="network"></a>
             <hr>
-            <ul>
-              <li>Short guide on website registration, how to add sensors, remove them etc.</li>
-              <li>Includes all details regarding how to configure hardware to work with the system</li>
-            </ul>
+            <p>If you're interested in adding your own sensors to the network to share your data, it couldn't be simpler thanks to our system design. This video walks you through the entire process, with an example, to get you going. Afterwards, read on for information on how to configure your hardware to start sending data!</p>
+            <div class="embed-responsive embed-responsive-16by9 video">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/I_Dkeb1bAdI?rel=0&showinfo=0&controls=0" frameborder="0"></iframe>
+        </div>
 
             <!-- Node.js API -->
             <h2>Web API</h2>
@@ -254,9 +254,9 @@
             <h2>Hardware</h2>
             <a class="anchor" id="hardware"></a>
             <hr>
-            <ul>
               <h3>Building the Hardware tutorial:</h3>
               <p>The following section will show you how to assemble the hardware we used to prepare for coding. We will assume that you have the following things to be able to create the hardware:</p>
+              <ul>
               <li>The Stamp board (Created by Grame McPhillips)</li>
               <li>A Sharp 2Y0A02 Distance Sensor</li>
               <li>A 5V battery pack (or create one like we did in the below section)</li>
@@ -266,6 +266,7 @@
               <li>electrical tape (optional)</li>
               <li>a 3.3V to 5.0 V converter (created by Graeme McPhillips)</li>
               <li>Arduino Mega (other boards are available if you choose to not use a shield)</li>
+            </ul>
               <h4>Attaching Sensors to the board.</h4>
               <p>To attach the sensors to the Stamp board, you will have to connect it to the right input. Refer to the 
               <p>For full documentation on the Stamp board refer to the <a href="img/stamp.pdf" >pdf</a> or use the below diagram:</p>
@@ -282,10 +283,11 @@
               <p>This provides 6V, which is a little too high for our board to handle. To lower the voltage, we attached a board at the back that would allow us to wire a capacitor and a DC-DC converter to lower the voltage. 
               This can be seen in the following picture: </p>
               <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/BatteryPackBack.jpg"> </p>
+              <ul>
               <li>The first row from the left is connected to our ground output plug (the one that you attach the ground wire to), the left most connection of the DC-DC converter (outputs the ground) and to the ground of the battery pack.</li>
               <li>The second row is connected to our 5V output plug (the one that will output 5V), a wire connecting the 2nd row to the 4th row, the middle connection of the DC-DC converter (outputs 5V) and our capacitor. </li>
               <li>The third row is connected to our 6V output plug (unused), the right connection of the DC-DC converter (takes in 6V) and the other end of the capacitor. </li>
-              <li>The fourth row simply connects the 6V output to our second row.</li><p></p>
+              <li>The fourth row simply connects the 6V output to our second row.</li></ul>
               <p>Once the battery has been prepared, we need to create our connectors and attach them to the stamp. First, attach a cable to g,T17. 
               This is the connection where we can input 5V. Second, attach a cable to h,T18. This is the connection to the ground. To help illustrate this, here is a circuit diagram:</p>
               <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/BatteryCircuit.png"> </p>
@@ -296,15 +298,17 @@
               <p>The easiest way to show this is with a circuit diagram:</p>
               <p><img class="img-responsive img-rounded" style="margin-left: auto; margin-right: auto;" src="img/ArduinoCircuit.png"> </p>
               <p>As you can see, a few things are going on here. The 3.3V side of the voltage converter has 4 connections:</p>
+              <ul>
               <li>The top connection is connected to a 3.3V power supply from the Arduino </li>
               <li>The second wire is connected to 6,T6 which is an RX input</li>
               <li>The third wire is connected to 5,T5, which is a TX output</li>
-              <li>The bottom one is simply to enable the board so we feed it a 3.3V signal to "turn it on" </li>
+              <li>The bottom one is simply to enable the board so we feed it a 3.3V signal to "turn it on" </li></ul>
               <p>The 5.0V side of the voltage converter also has 4 connections:</p>
+              <ul>
               <li>The top connection is connected to a 5.0V power supply from the Arduino </li>
               <li>The second wire is connected to a TX output on the Arduino</li>
               <li>The third wire is connected to a RX input on the Arduino</li>
-              <li>The rest of the wires are all wired together to ground to avoid random signals. </li>
+              <li>The rest of the wires are all wired together to ground to avoid random signals. </li></ul>
               <p>Finally, connect the ground of the Stamp, j,T20 to the ground of the Arduino as shown</p>
               <p>NOTE: the TX output has to be directly across from the RX input on the volt converter, as we want RX to be connected to TX and vice versa.</p>
               <p>Now that you have all the hardware set up, you are now ready to do some coding.</p>
@@ -317,8 +321,10 @@
               If you are using Windows I especially recommend installing the OS, as it is essentially a version of Ubuntu, which will make coding and prepping the hardware much easier.</p>
               <p>Once you have installed the OS/library, you will need to get an updated version of the libraries for mc1322x, as they are outdated on the Contiki website. Download the github libraries from here and replace them with your old contiki libraries: https://github.com/malvira/libmc1322x/wiki.</p>
               <p>Once you have the newer libraries, I would recommend taking a look through the different libraries. There is a lot of stuff going on, but the important directories are:</p>
+              <ul>
               <li>/contiki/cpu/mc1322x/ </li>
               <li>/contiki/examples/</li>
+            </ul>
               <h3>Step 2: uploading code on the Stamp Board</h3>
               <p>now that we have our software ready, lets try and upload a test code. If this is your first time uploading to a specific board, you need to first wipe the board. 
               To do this, navigate to /contiki/cpu/mc1322x/tools/ftditools/ and use the make file to make an upload file of the bbmc.c file.</p>
