@@ -673,7 +673,10 @@ public static void main(String[] args)
             <h4>A Plug and Play Architecture</h4>
             <p>We've achieved this through the culmination of multiple design features. First of all, by providing a web service for user sign-up and a remarkably simple sensor registration system. As well as providing a standardised set of metadata, this means that sensors can begin sharing their data in as few as three steps. The second step, of course, is to modify the firmware such that it sends a string in a particular format - with its own ID and the user's identifier. This process of course requires a certain level of technical ability, but there are certainly abstraction layers that can be built, for example in the form of a GUI, to streamline the process. After that, all that's left is to turn it on. In our demonstrations we are able to register as a user, initialise a sensor, set the firmware, and have data being sent all within a few tens of seconds. All of this comes with added benefits of the data being automatically validated, sorted, and standardised for public use.</p>
             <h4>Scalability</h4>
-            <p>yep, it's scalable</p>
+            <p>This has been achieved in multiple ways. </p>
+            <p>One of the ways we ensured that our system would be scalable was to switch from a SQL to a noSQL database. An SQL database would have worked just fine for our proof of concept, but if we wanted to ensure that large scale analytics would be possible, we had to use a noSQL database.</p>
+            <p>Another way we ensured that our project is scalable is by adding the ability to add sensors of different types. The system itself can store any kinds of data, although the parking app will only use data that is read as a distance and in centimeters. This allows future applications for things like weather apps to use our system to store and access their data.</p>
+            <p>The hardware itself is also
             <h4>A mesh of data</h4>
             <p>Yep, check out sick databases</p>
             <h4>Full public accessibility</h4>

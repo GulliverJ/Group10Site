@@ -66,9 +66,15 @@
             <h2 style="margin-top: 12px">The Team</h2>
             <a class="anchor" id="team"></a>
             <hr>
-            <ul>
-              <li>Details about each of us and our positions on the team (photos this time..?)</li>
-            </ul>
+            <div style="border-bottom: solid 1px silver; overflow: hidden;">
+            <img class="img-rounded" align="right" hspace="50" src="img/johan2.jpg" >
+             <h4><span style="font-weight: lighter">Johan Mouritsen</span></h4>
+             <p><b>Main Role:</b> Hardware Lead  </p>
+             <p><b>Secondary Role:</b> Documentation and Testing</p>
+             <p align="left"><b>Description:</b> I am a Danish Computer Science student at UCL, completing the 4 year MEng Computer Science program.
+             I worked mainly on the hardware side of this project, while helping my team where I could on other sections. </p>
+             </div>
+             
 
             <!-- Project Management -->
             <h2>Project Management</h2>
@@ -166,6 +172,14 @@
             <h4>08-03-2015: <span style="font-weight: lighter">Cassandra database now fully designed</span></h4>
             <p>All collum families are now ready for data entry. This is the version of our database we pretty much decided to use in the end. 
             Although it is not the most efficient on large scales, it works for our project.</p>
+
+            <div class="subsection-divide"></div>
+            
+            <h4>10-03-2015: <span style="font-weight: lighter">The decision to use UDP was made</span></h4>
+            <p>After further research into Arduino and the GSM shield, we found that it was simpler to send a UDP string, as Arduino already provided libraries for this.
+            We therefore decided that to send data to the authentication server, it had to be send as a UDP string. 
+            Although we knew TCP was the better option for this project, we decided for the sake of implementation to just do UDP. 
+            In the final version, the server should be able to accept both TCP and UDP.</p>
 
             <div class="subsection-divide"></div>
             

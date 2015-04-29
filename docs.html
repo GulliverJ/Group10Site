@@ -332,50 +332,14 @@
               <p>once you've clicked make, redirect yourself back to tools and run this code to test your ADC channels: </p>
               <pre>sudo ./mc1322x-load.pl -f /home/user/contiki-2.7/cpu/mc1322x/tests/adc_freescale-usb.bin -t /dev/ttyUSB1</pre>
               <p>click the reset button on the board (top button) and your adc readings should now be displayed. channels 1-7 should display junk, while channel 0 displays ADC 0.</p>
-              <p>Here is some example code to read the adc and send it through uart2 serial port:</p>
-              <pre>#include <mc1322x.h>
-#include <board.h>
-
-#include <stdio.h>
-#include "tests.h"
-#include "config.h"
-#include "adc.h"
-
-void main(void) {
-
-    trim_xtal();
-    uart_init(UART1, 115200);
-    uart_init(UART2, 115200);
-    adc_init();
-
-    adc_setup_chan(0);
-    
-    printf("adc test\r\n");
-
-        GPIO->PAD_PU_SEL.U2RX = 1;
-    int i;
-    while(1) {
-
-        adc_service();
-        if(adc_reading[0] > 500)
-        {
-        uart2_putc('a');
-        for(i=0; i<1000000; i++) { continue; }
-        }
-        else
-        {
-        uart2_putc('b');
-        for(i=0; i<1000000; i++) { continue; }
-        }
-    }
-    
-}</pre>
+              <p>To run the code we used for the project. Find the c file named u1u2-loopback.c loopback and save it in your Contiki tests folder. (if you used our Contiki library on the github, it will already be in there).</p>
               <p>now that you know how to upload programs, its time to start coding. You will now have to read through the libraries and learn how the header files should be used. You can use our code here to take an ADC value and send it via serial to the Arduino:</p>
               <h3>Step 3: uploading code on the Arduino</h3>
               <p>Uploading code on the Arduino is incredibly simple. Simply install the Arduino program, select your usb connected board under tools/board and you are ready to go. Here is some code we wrote to read the serial port and write it to our computer:</p>
               <pre>
+int incomingByte = 0;   // for incoming serial data
 void setup() {
-        Serial.begin(115200);     // opens serial port, sets data rate to 9600 bps
+        Serial.begin(115200);     // opens serial port, sets data rate to 115200 bps
         Serial3.begin(115200);
 }
 
@@ -384,12 +348,24 @@ void loop() {
         if (Serial3.available() > 0) {
                 // read the incoming byte:
                 incomingByte = Serial3.read();
-               Serial.println(incomingByte);
-               Serial.println(incomingByteNew);
-       
+                //Serial.println(incomingByte);
         }
+       
+        //use this code if the readings are off:
+        //Serial.print("a1b2c3d4;1:");
+        //Serial.print(150 - (incomingByte - 133) * 2 );
+        //Serial.println(";");
+        
+        Serial.print("a1b2c3d4;1:");
+        Serial.print(150 - (incomingByte - 97)*8 );
+        Serial.println(";");
+        
 }</pre>
-              <p>We used this to send data to our computer which then handled the UDP section.</p>
+              <p>We used this to send data to our computer which then handled the UDP section. As you can see we are printing a1b2c3d4; which is our identifier, followed by a 1: followed by what the sensor is reading followd by a ;. This is the format the authentication server expects and will reject it if you dont follow the format.</p>
+              <pre>identifier;sensorID:sensorReading;</pre>
+              <h3>Step 4: Sending the data with UDP</h3>
+              <p>To handle UDP communications, we wrote a simple java program that reads the message from the Arduino port and sends it off every 5 seconds. You can find this code on the Github. Make it into a java project in eclipse. </p>
+              <p>If the console prints the data and then prints sent, you know that the code is working and that it is updating to the server. This will then within 15-30 seconds update the specified sensor on the website.</p>
             </ul>
 
           </div>
