@@ -37,8 +37,8 @@
     <div class="pageheader">
       <div class="container">
         <div>
-          <h1 style="color: #f60">Development</h1>
-          <p class="pageblurb">Some appropriate graphics and text saying something to the effect of "Development history"</p><br>
+          <h1 style="color: #f60; font-size: 70px; padding-top: 48px">Development</h1>
+          <p class="pageblurb">View the development history for the project</p><br>
         </div>
       </div>
     </div>
@@ -67,15 +67,39 @@
             <h2 style="margin-top: 12px">The Team</h2>
             <a class="anchor" id="team"></a>
             <hr>
+            <h3>Primary Developers</h3> 
+
             <div style="border-bottom: solid 1px silver; overflow: hidden;">
-            <img class="img-rounded" style="margin-left: 30px;" align="right"  src="img/johan2.jpg" >
-             <h3>Primary Developers</h3> 
+              <img class="img-rounded" style="margin: 12px; float: left; max-width: 184px" align="right"  src="img/victoria.jpg" >
+             
+             <h4><span style="font-weight: lighter">Victoria Koh</span></h4>
+             <p><b>Contact:</b> emnail@gmail.com</p>
+             <p><b>Main Role:</b> Project Manager</p>
+             <p><b>Secondary Role:</b> RESTful API and analytics</p>
+             <p align="left"><b>Description:</b> I am Victoria. </p>
+            </div>
+
+            <div style="border-bottom: solid 1px silver; overflow: hidden;">
+              <img class="img-rounded" style="margin: 12px; float: left; max-width: 184px" align="right"  src="img/johan2.jpg" >
+             
              <h4><span style="font-weight: lighter">Johan Mouritsen</span></h4>
+             <p><b>Contact:</b> email@gmail.com</p>
              <p><b>Main Role:</b> Hardware Lead  </p>
              <p><b>Secondary Role:</b> Documentation and Testing</p>
              <p align="left"><b>Description:</b> I am a Danish Computer Science student at UCL, completing the 4 year MEng Computer Science program.
              I worked mainly on the hardware side of this project, while helping my team where I could on other sections. </p>
-             </div>
+            </div>
+
+            <div style="border-bottom: solid 1px silver; overflow: hidden;">
+              <img class="img-rounded" style="margin: 12px; float: left; max-width: 184px" align="right"  src="img/gulliver.jpg" >
+             
+               <h4><span style="font-weight: lighter">Gulliver Anslow-Johnson</span></h4>
+               <p><b>Contact:</b> gulliverjohnson@gmail.com</p>
+               <p><b>Main Role:</b> System lead (Software and Java API)</p>
+               <p><b>Secondary Role:</b> Back-end and Front-end developer</p>
+               <p align="left"><b>Description:</b> I'm a long-term automated systems enthusiast and love the reward of a working project. I've mainly been involved in writing the backend software for the system, along with developing the Java API and both the system and demonstration websites. </p>
+            </div>
+
              <h3>Project Coordinators</h3>
              <div style="border-bottom: solid 1px silver; overflow: hidden;">
              <h4><span style="font-weight: lighter">Graham Roberts</span></h4>
@@ -93,7 +117,7 @@
              <p></p>
              </div>
              <div style="border-bottom: solid 1px silver; overflow: hidden;">
-             <h4><span style="font-weight: lighter">Mobeen Ali</span></h4>
+             <h4><span style="font-weight: lighter">Mobeen Qureshi</span></h4>
              <p><b>Role:</b> Orange Labs contact </p>
              <p></p>
              </div>
@@ -273,11 +297,53 @@
             <h2>References</h2>
             <a class="anchor" id="refs"></a>
             <hr>
+
+            <h3>Data Storage (NoSQL)</h3>
             <ul>
+              <li>Choosing a NoSQL database: <a href="http://highscalability.com/blog/2011/6/20/35-use-cases-for-choosing-your-next-nosql-database.html">highscalability.com</a></li>
+              <li>NoSQL Databases Explained: <a href="http://www.mongodb.com/nosql-explained">mongoDB NoSQL explanation</a></li>
+              <li>Apache Cassandra: <a href="https://cassandra.apache.org/">cassandra.apache.org</a></li>
+              <li>What is Cassandra: <a href="http://planetcassandra.org/what-is-apache-cassandra/">planetcassandra.org</a></li>
+              <li>Druid as an alternative: <a href="http://en.wikipedia.org/wiki/Druid_(open-source_data_store)">wikipedia.org</a></li>
+            </ul>
+
+            <h3>Using Cassandra</h3>
+            <ul>
+              <li>Cassandra Documentation: <a href="http://docs.datastax.com/en/cql/3.1/cql/cql_intro_c.html">CQL specification</a></li>
+              <li>The Cassandra Data Model: <a href="https://pkghosh.wordpress.com/2013/07/14/storing-nested-objects-in-cassandra-composite_columns/">Blog post about composite columns</a></li>
+              <li>Cassandra Drivers: <a href="http://planetcassandra.org/client-drivers-tools/">planetcassandra.org</a></li>
+              <li>Comparing drivers: <a href="http://stackoverflow.com/questions/18598745/differences-betweeen-hector-cassandra-and-jdbc">stackoverflow.com</a></li>
+            </ul>
+
+            <h3>Configuring the Linux Server</h3>
+            <ul>
+              <li>LAMP stack installation guide: <a href="http://www.server-world.info/en/note?os=Scientific_Linux_6&p=httpd&f=1">server-world.info</a></li>
+              <li>LAMP stack on Ubuntu: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu">Digital Ocean.com</a></li>
+            </ul>
+
+            <h3>Designing the APIs</h3>
+            <ul>
+              <li>Factors to consider: <a href="http://rominirani.com/2010/07/01/public-api-design-factors/">rominirani.com</a></li>
+            </ul>
+
+            <h3>Writing the Java backend</h3>
+            <ul>
+              <li>Datagram Packets: <a href="https://docs.oracle.com/javase/tutorial/networking/datagrams/clientServer.html">docs.oracle.com</a></li>
+            </ul>
+
+            <h3>Using the Google Maps API</h3>
+            <ul>
+              <li>Maps API tutorial: <a href="https://developers.google.com/maps/documentation/javascript/tutorial">developers.google.com</a></li>
+            </ul>
+
             <h3>Firmware References</h3>
+            <ul>
               <li>The Arduino website:  <a href="http://www.arduino.cc">http://www.arduino.cc</a></li>
               <li>The Contiki website:  <a href="http://www.contiki-os.org">http://www.contiki-os.org</a></li>
+            </ul>
             <h3>Hardware References</h3>
+            <ul>
+              <li>Choosing the tolerances: <a href="https://law.resource.org/pub/us/cfr/ibr/005/sae.j1100.2001.html">law.resource.org</a></li>
               <li>The Sensor board:     <a href="img/stamp.pdf" >Stamp.pdf</a></li>
               <li>The Microcontroller:  <a href="img/MC1322x.pdf" >MC1322x.pdf</a></li>
               <li>The Infra-Red Sensor: <a href="img/Sharp_gp2y0a02.pdf" >Sharp_gp2y0a02.pdf</a></li>
