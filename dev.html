@@ -68,10 +68,8 @@
             <a class="anchor" id="team"></a>
             <hr>
             <div style="border-bottom: solid 1px silver; overflow: hidden;">
-
-            <img class="img-rounded" style="margin-left: 30px;" align="right"  src="img/johan2.jpg" >
-             <h3>Primary Developers</h3>
-
+			<img class="img-rounded" align="right" hspace="50" src="img/johan2.jpg" >
+             <h3>Primary Developers</h3> 
              <h4><span style="font-weight: lighter">Johan Mouritsen</span></h4>
              <p><b>Main Role:</b> Hardware Lead  </p>
              <p><b>Secondary Role:</b> Documentation and Testing</p>
@@ -119,6 +117,9 @@
             <img src="img/ProjectManagement.png">
             <p>Something to note is that each field does not always carry the same amount of work load. The fields simply act as a percentage guide.</p>
             <p>As you can see, we split up the work quite equally. Gulliver worked the most on the System, Victoria on the Application and Johan on the Hardware. We did however have an overlap in each section of people providing support where possible.</p>
+            <h3>Version Control</h3>
+            <p>To keep all our code organised, we used multiple git repositories. We had one for general code from both the system and parking application and one for our documentation website. 
+            This allowed us to work on different sections of code and share it with one another without creating too much interference. Using git also allowed is to keep a record of entries made so that we can revert back to old code if needed.</p>
             <h3>Bi-Weekly Reports</h3>
             <h4>Term 1</h4>
             <p><a href="img/biweekly1.pdf">Biweekly 1</a></p>
@@ -221,7 +222,7 @@
             Although it is not the most efficient on large scales, it works for our project.</p>
 
             <div class="subsection-divide"></div>
-            
+  
             <h4>10-03-2015: <span style="font-weight: lighter">The decision to use UDP was made</span></h4>
             <p>After further research into Arduino and the GSM shield, we found that it was simpler to send a UDP string, as Arduino already provided libraries for this.
             We therefore decided that to send data to the authentication server, it had to be send as a UDP string. 
